@@ -23,6 +23,26 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        switch (auth()->user()->role) {
+            case 1:
+                return redirect('/');
+                break;
+            case 2:
+                return redirect('/employee/');
+                break;
+            default:
+                abort(403);
+                break;
+        }
     })->name('dashboard');
+});
+
+// Admin Routes
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::get('/', fn () => view('admin/dashboard'))->name('admin.dashboard');
+});
+
+// Employee Routes
+Route::group(['prefix' => 'employee', 'middleware' => ['auth', 'employee']], function () {
+    Route::get('/', fn () => view('employee/dashboard'))->name('employee.dashboard');
 });
