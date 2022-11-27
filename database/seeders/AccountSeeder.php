@@ -25,7 +25,7 @@ class AccountSeeder extends Seeder
 
         User::create([
             'name' => 'Employee',
-            'email' => 'employee',
+            'email' => 'employee@gmail.com',
             'password' => Hash::make('password'),
             'role' => 0,
         ]);

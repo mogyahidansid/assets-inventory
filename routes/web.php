@@ -23,12 +23,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        switch (auth()->user()->role) {
+        $role_id = auth()->user()->role;
+        switch ($role_id) {
             case 1:
-                return redirect('/');
+                // return redirect('/admin');
+                return redirect()->route('admin.dashboard');
                 break;
-            case 2:
-                return redirect('/employee/');
+            case 0:
+                return redirect()->route('employee.dashboard');
                 break;
             default:
                 abort(403);
@@ -38,16 +40,31 @@ Route::middleware([
 });
 
 // Admin Routes
-Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/', fn() => view('admin/dashboard'))->name('admin.dashboard');
-});
+
+Route::prefix('/admin')
+    ->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'admin',
+    ])
+    ->group(function () {
+        Route::get('/dashboard', fn() => view('admin.dashboard'))->name(
+            'admin.dashboard'
+        );
+    });
 
 // Employee Routes
-Route::group(
-    ['prefix' => 'employee', 'middleware' => ['auth', 'employee']],
-    function () {
-        Route::get('/', fn() => view('employee/dashboard'))->name(
+
+Route::prefix('/employee')
+    ->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'employee',
+    ])
+    ->group(function () {
+        Route::get('/dashboard', fn() => view('employee.dashboard'))->name(
             'employee.dashboard'
         );
-    }
-);
+    });
