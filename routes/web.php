@@ -52,6 +52,13 @@ Route::prefix('/admin')
         Route::get('/dashboard', fn() => view('admin.dashboard'))->name(
             'admin.dashboard'
         );
+        Route::get('/assets', fn() => view('admin.asset'))->name('admin.asset');
+        Route::get('/request-assets', fn() => view('admin.request'))->name(
+            'admin.request'
+        );
+        Route::get('/borrowed-assets', fn() => view('admin.borrow'))->name(
+            'admin.borrow'
+        );
     });
 
 // Employee Routes
