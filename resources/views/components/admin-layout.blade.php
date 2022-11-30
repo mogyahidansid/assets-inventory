@@ -30,6 +30,7 @@
 </head>
 
 <body class="font-rubik antialiased">
+  <x-notifications z-index="z-50" />
   {{-- <div class="bg-red-500 border-r fixed w-[18rem] h-screen">
     <div class="px-3">
       <img src="{{ asset('assets/logo.png') }}" alt="" class="h-20">
@@ -371,15 +372,20 @@
                         </svg>
                         <span>Your Profile</span>
                       </a>
-                      <a href=""
-                        class="flex space-x-1 items-center text-sm hover:text-green-800 hover:fill-green-800 text-gray-700 fill-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5">
-                          <path fill="none" d="M0 0h24v24H0z" />
-                          <path
-                            d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5zm13-6v-3h-7v-2h7V8l5 4-5 4z" />
-                        </svg>
-                        <span>Logout</span>
-                      </a>
+                      <form method="POST" action="{{ route('logout') }}" role="none">
+                        @csrf
+                        <a href="{{ route('logout') }}"
+                          onclick="event.preventDefault();
+            this.closest('form').submit();"
+                          class="flex space-x-1 items-center text-sm hover:text-green-800 hover:fill-green-800 text-gray-700 fill-gray-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5">
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M5 22a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5zm13-6v-3h-7v-2h7V8l5 4-5 4z" />
+                          </svg>
+                          <span>Logout</span>
+                        </a>
+                      </form>
                     </div>
                   </div>
                 </div>

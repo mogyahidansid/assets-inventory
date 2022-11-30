@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
@@ -74,4 +74,11 @@ Route::prefix('/employee')
         Route::get('/dashboard', fn() => view('employee.dashboard'))->name(
             'employee.dashboard'
         );
+        Route::get('/requests', fn() => view('employee.request'))->name(
+            'employee.request'
+        );
+        Route::get(
+            '/transaction-history',
+            fn() => view('employee.history')
+        )->name('employee.history');
     });

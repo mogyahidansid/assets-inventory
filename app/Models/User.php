@@ -52,4 +52,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = ['profile_photo_url'];
+
+    public function employeeInformation()
+    {
+        return $this->hasOne(EmployeeInformation::class);
+    }
 }
