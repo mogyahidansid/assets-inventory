@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
         switch (auth()->user()->role) {
@@ -38,11 +38,45 @@ Route::middleware([
 });
 
 // Admin Routes
-Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/', fn () => view('admin/dashboard'))->name('admin.dashboard');
-});
+
+Route::prefix('/admin')
+    ->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'admin',
+    ])
+    ->group(function () {
+        Route::get('/dashboard', fn () => view('admin.dashboard'))->name(
+            'admin.dashboard'
+        );
+        Route::get('/assets', fn () => view('admin.asset'))->name('admin.asset');
+        Route::get('/request-assets', fn () => view('admin.request'))->name(
+            'admin.request'
+        );
+        Route::get('/borrowed-assets', fn () => view('admin.borrow'))->name(
+            'admin.borrow'
+        );
+    });
 
 // Employee Routes
-Route::group(['prefix' => 'employee', 'middleware' => ['auth', 'employee']], function () {
-    Route::get('/', fn () => view('employee/dashboard'))->name('employee.dashboard');
-});
+
+Route::prefix('/employee')
+    ->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'employee',
+    ])
+    ->group(function () {
+        Route::get('/dashboard', fn () => view('employee.dashboard'))->name(
+            'employee.dashboard'
+        );
+        Route::get('/requests', fn () => view('employee.request'))->name(
+            'employee.request'
+        );
+        Route::get(
+            '/transaction-history',
+            fn () => view('employee.history')
+        )->name('employee.history');
+    });

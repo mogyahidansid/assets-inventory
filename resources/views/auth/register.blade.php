@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
+  {{-- <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
         </x-slot>
@@ -56,5 +56,17 @@
                 </x-jet-button>
             </div>
         </form>
-    </x-jet-authentication-card>
+    </x-jet-authentication-card> --}}
+  <div
+    class="flex flex-col space-y-3 font-rubik relative bg-gradient-to-tl from-green-500 via-green-600 to-green-800  h-screen justify-center items-center">
+    <div class="absolute bottom-0 left-32 xl:left-24">
+      <img src="{{ asset('assets/IMAnLogo.png') }}" class="opacity-40" alt="">
+    </div>
+    <div class="">
+      <h1 class="font-black text-white uppercase text-2xl">Integrated Mindanaons Association for Natives (iman)</h1>
+
+    </div>
+    <livewire:create-account />
+  </div>
+
 </x-guest-layout>
