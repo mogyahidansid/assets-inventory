@@ -70,10 +70,11 @@ class Home extends Component
             ]);
         }
         $this->request_form = false;
-        $this->notification->success([
-            'title' => 'Success',
-            'description' => 'Request has been sent',
-        ]);
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Your request has been sent.'
+        );
+        $this->category_get = [];
     }
 
     public function confirmDialog()

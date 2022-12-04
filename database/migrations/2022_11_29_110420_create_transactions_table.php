@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('transaction_code');
             $table->foreignId('user_id')->constrained();
             $table->date('return_date');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

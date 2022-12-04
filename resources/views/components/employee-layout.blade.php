@@ -30,8 +30,8 @@
 </head>
 
 <body class="font-rubik antialiased h-full">
-  <x-dialog z-index="z-50" blur="md" align="center" />
   <x-notifications z-index="z-50" />
+  <x-dialog z-index="z-50" blur="md" align="center" />
   <div class="min-h-full">
     <header class=" bg-gradient-to-b from-green-500 via-green-600 to-green-800 pb-24">
       <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
