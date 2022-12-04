@@ -24,11 +24,11 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         switch (auth()->user()->role) {
-            case 1:
+            case 0:
                 return redirect('/');
                 break;
-            case 2:
-                return redirect('/employee/');
+            case 1:
+                return redirect('/employee');
                 break;
             default:
                 abort(403);
