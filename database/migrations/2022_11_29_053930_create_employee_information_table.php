@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('address');
             $table->string('contact');
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('department_id');
             $table->timestamps();
         });
     }

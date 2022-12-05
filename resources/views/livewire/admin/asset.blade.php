@@ -16,7 +16,7 @@
         <x-button icon="cog" slate wire:click="$set('manage_category', true)" />
         <x-button icon="plus" wire:click="$set('add_modal', true)" label="Add New" positive />
         <x-native-select wire:model="filter_id">
-          <option>Filter by Category</option>
+          <option selected hidden>Filter by Category</option>
           @forelse ($categories as $item)
             <option value="{{ $item->id }}">{{ $item->name }}</option>
           @empty
@@ -34,16 +34,19 @@
                 <tr>
                   <th scope="col"
                     class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">
-                    Name</th>
-                  <th scope="col" width="400"
+                    INVENTORY CODE</th>
+                  <th scope="col"
                     class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Description
+                    serial number
                   </th>
                   <th scope="col"
-                    class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Quantity
+                    class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">name
                   </th>
                   <th scope="col"
-                    class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">STATUS
+                    class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">description
+                  </th>
+                  <th scope="col"
+                    class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">price
                   </th>
                   <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-6">
                     <span class="sr-only">Edit</span>
@@ -54,26 +57,23 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
-                @forelse ($assets as $asset)
+                @forelse ($inventories as $inventory)
                   <tr>
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-500 sm:pl-6">
-                      {{ $asset->name }}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $asset->description }}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $asset->quantity }}</td>
+                      {{ $inventory->inventory_code }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      @if ($asset->status == '1')
-                        <span
-                          class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          Available
-                        </span>
-                      @else
-                        <span
-                          class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Not
-                          Available</span>
-                      @endif
+                      {{ $inventory->assets->first()->serial_number }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {{ $inventory->assets->first()->name }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {{ $inventory->assets->first()->description }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      &#8369;{{ number_format($inventory->assets->first()->price, 2) }}
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <x-button label="{{ $asset->category->name }}" xs />
+                      <x-button label="  {{ $inventory->assets->first()->category->name }}" 2xs class="uppercase" />
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm  sm:pr-6">
                       <x-button label="Option" icon="cog" xs dark />
@@ -151,13 +151,28 @@
       <div class="col-span-2">
         <x-textarea wire:model.defer="asset_description" label="Description" placeholder="Describe the asset" />
       </div>
-      <x-inputs.number wire:model.defer="asset_quantity" label="Quantity" />
-      <x-native-select label="Category" wire:model.defer="asset_category">
-        <option>Select Category</option>
-        @foreach ($categories as $item)
-          <option value="{{ $item->id }}">{{ $item->name }}</option>
-        @endforeach
-      </x-native-select>
+      <x-input wire:model.defer="asset_price" label="Price" suffix="₱" />
+      <x-input wire:model.defer="asset_serial_number" label="Serial Number" />
+      <div class="col-span-1">
+        <x-textarea wire:model.defer="asset_remarks" label="Remarks" placeholder="Remarks of the asset" />
+      </div>
+      <div class="col-span-1">
+        <x-native-select label="Category" wire:model.defer="asset_category">
+          <option>Select Category</option>
+          @foreach ($categories as $item)
+            <option value="{{ $item->id }}">{{ $item->name }}</option>
+          @endforeach
+        </x-native-select>
+        <div class="mt-4">
+          <x-checkbox id="right-label" label="Is Bundle" wire:model="isBundle" />
+          @if ($isBundle)
+            <div class="mt-3">
+              <x-inputs.number label="Quantity" />
+            </div>
+          @endif
+
+        </div>
+      </div>
 
 
     </div>
