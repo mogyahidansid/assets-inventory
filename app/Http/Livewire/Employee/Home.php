@@ -95,4 +95,18 @@ class Home extends Component
             ],
         ]);
     }
+
+    public function addQty($key)
+    {
+        $this->category_get[$key]['qty'] += 1;
+    }
+
+    public function minusQty($key)
+    {
+        if ($this->category_get[$key]['qty'] > 1) {
+            $this->category_get[$key]['qty'] -= 1;
+        } else {
+            unset($this->category_get[$key]);
+        }
+    }
 }

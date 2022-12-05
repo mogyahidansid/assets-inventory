@@ -19,7 +19,15 @@
     <x-input wire:model.defer="email" label="Email" suffix="@" />
     <x-inputs.password wire:model.defer="password" label="Password" />
     <x-inputs.password wire:model.defer="confirm_password" label="Confirm Password" />
+    <div class="col-start-2 col-end-2">
+      <x-native-select label="Department" wire:model="department_id">
+        <option selected hidden>Select Department</option>
+        @foreach ($departments as $department)
+          <option value="{{ $department->id }}">{{ $department->name }}</option>
+        @endforeach
 
+      </x-native-select>
+    </div>
   </div>
 
   <div class="mt-12 flex justify-end space-x-2">

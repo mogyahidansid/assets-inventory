@@ -12,13 +12,12 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_code');
-            $table->foreignId('user_id')->constrained();
-            $table->date('borrowed_date');
-            $table->date('returned_date');
-            $table->integer('status')->default(1);
+            $table->string('inventory_code');
+            $table->unsignedBigInteger('asset_id');
+            $table->boolean('is_bundle')->default(false);
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('inventories');
     }
 };

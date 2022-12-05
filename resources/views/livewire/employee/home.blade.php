@@ -64,8 +64,17 @@
                     <li class="py-1">
                       <div class="flex items-center space-x-4">
                         <div class="min-w-0 flex-1">
-                          <p class="truncate text-sm font-medium text-gray-900">{{ $item['name'] }}</p>
-                          <p class="truncate text-sm text-gray-500">x {{ $item['qty'] }}</p>
+                          <p class="truncate text-sm font-bold uppercase text-green-700">{{ $item['name'] }}</p>
+                          <div class="flex items-center gap-x-1">
+                            <x-button.circle wire:click="minusQty({{ $key }})"
+                              spinner="minusQty({{ $key }})" xs icon="minus" />
+
+                            <span class="bg-teal-600 py-0.5 rounded-sm text-white text-sm px-3"
+                              x-text="{{ $item['qty'] }}"></span>
+
+                            <x-button.circle wire:click="addQty({{ $key }})"
+                              spinner="addQty({{ $key }})" xs icon="plus" />
+                          </div>
                         </div>
                         <div>
                           <x-button wire:click="removeItem({{ $key }})" rounded 2xs label="cancel" negative />
