@@ -23,12 +23,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        switch (auth()->user()->role) {
-            case 0:
-                return redirect('/');
-                break;
+        $role_id = auth()->user()->role;
+        switch ($role_id) {
             case 1:
-                return redirect('/employee');
+                // return redirect('/admin');
+                return redirect()->route('admin.dashboard');
+                break;
+            case 0:
+                return redirect()->route('employee.dashboard');
                 break;
             default:
                 abort(403);
@@ -57,6 +59,9 @@ Route::prefix('/admin')
         Route::get('/borrowed-assets', fn () => view('admin.borrow'))->name(
             'admin.borrow'
         );
+        // Route::get('/borrowed-assets/{id}', fn () => view('admin.borrow'))->name(
+        //     'admin.borrow'
+        // );
     });
 
 // Employee Routes
