@@ -106,6 +106,35 @@
 
   <x-modal.card align="center" z-index="z-40" title="FORM CONFIRMATION" max-width="4xl" blur
     wire:model.defer="request_form">
+    <div class="mt-3 flex justify-between">
+      <div>
+        <h1 class="font-semibold text-gray-600">Your Personal Information</h1>
+        <div class="border-l-2 px-2 border-green-700">
+          <div class="mt-2">
+            <h1 class="text-gray-600 text-xs">Borrower Name</h1>
+            <span class="text-gray-700">{{ auth()->user()->employeeInformation->firstname }}
+              {{ auth()->user()->employeeInformation->lastname }}</span>
+          </div>
+          <div class="mt-2">
+            <h1 class="text-gray-600 text-xs">Address</h1>
+            <span class="text-gray-700">{{ auth()->user()->employeeInformation->address }}</span>
+          </div>
+          <div class="mt-2">
+            <h1 class="text-gray-600 text-xs">Phone Number</h1>
+            <span class="text-gray-700">{{ auth()->user()->employeeInformation->contact }}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <x-datetime-picker label="Return Date" without-time placeholder="" wire:model.defer="normalPicker" />
+        <div class="mt-5">
+          <h1 class="text-gray-600 text-xs">Accountable Person</h1>
+          <span class="text-gray-700 underline">{{ auth()->user()->employeeInformation->department->name }}</span>
+        </div>
+      </div>
+    </div>
+    {{-- <div>
+    <x-input wire:model="firstName" label="Name" placeholder="User's first name" />
     <div class="w-64">
       <label for="email"
         class="block text-sm font-medium text-gray-700 @error('return_date') text-red-600 @enderror">Expected return
@@ -118,20 +147,21 @@
         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
       @enderror
     </div>
+   </div> --}}
     <div class=" mt-5 bg-green-100 rounded-lg p-3">
       <header>
-        <h1 class="text-lg text-gray-700 font-bold ">Your Request Item</h1>
+        <h1 class="text-lg uppercase text-gray-700 font-bold ">Your Request Item</h1>
       </header>
       <div class="grid mt-2 grid-cols-4 gap-4">
         @foreach ($category_get as $item)
           <div class="bg-white p-1 px-4">
-            <h1 class="font-semibold text-green-700">{{ $item['name'] }}</h1>
+            <h1 class="font-semibold  uppercase text-green-700">{{ $item['name'] }}</h1>
             <h1 class="leading-3">x {{ $item['qty'] }}</h1>
           </div>
         @endforeach
       </div>
     </div>
-    <div class="mt-3">
+    {{-- <div class="mt-3">
       <h1 class="font-semibold text-gray-600">Your Personal Information</h1>
       <div class="border-l-2 px-2 border-green-700">
         <div class="mt-2">
@@ -148,11 +178,12 @@
           <span class="text-gray-700">{{ auth()->user()->employeeInformation->contact }}</span>
         </div>
       </div>
-      <x-slot name="footer">
-        <div class="flex justify-end items-center space-x-2">
-          <x-button wire:click="$set('request_form', false)" label="Cancel" negative />
-          <x-button label="Confirm Request" wire:click="confirmDialog" right-icon="chevron-double-right" dark />
-        </div>
-      </x-slot>
+    </div> --}}
+    <x-slot name="footer">
+      <div class="flex justify-end items-center space-x-2">
+        <x-button wire:click="$set('request_form', false)" label="Cancel" negative />
+        <x-button label="Confirm Request" wire:click="confirmDialog" right-icon="chevron-double-right" dark />
+      </div>
+    </x-slot>
   </x-modal.card>
 </div>

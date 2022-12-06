@@ -167,7 +167,7 @@
           <x-checkbox id="right-label" label="Is Bundle" wire:model="isBundle" />
           @if ($isBundle)
             <div class="mt-3">
-              <x-inputs.number label="Quantity" />
+              <x-inputs.number label="Quantity" wire:model.defer="asset_quantity" />
             </div>
           @endif
 

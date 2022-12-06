@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
             $table->date('borrowed_date');
             $table->date('returned_date');
+            $table->string('accountable_person');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

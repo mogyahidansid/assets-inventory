@@ -87,6 +87,15 @@ class Asset extends Component
             'Z',
         ];
 
+        $this->validate([
+            'asset_name' => 'required|unique:assets,name',
+            'asset_category' => 'required',
+            'asset_price' => 'required',
+            'asset_description' => 'required',
+            'asset_remarks' => 'required',
+            'asset_serial_number' => 'required|unique:assets,serial_number',
+        ]);
+
         $query = AssetModel::where(
             'category_id',
             $this->asset_category
@@ -97,56 +106,75 @@ class Asset extends Component
         $inventory_code =
             'IMAN-' . $alpha[$cat] . str_pad($query, 3, '0', STR_PAD_LEFT);
 
-        $this->validate([
-            'asset_name' => 'required|unique:assets,name',
-            'asset_category' => 'required',
-            'asset_price' => 'required',
-            'asset_description' => 'required',
-            'asset_remarks' => 'required',
-            'asset_serial_number' => 'required|unique:assets,serial_number',
-            'isBundle' => 'required',
-        ]);
-
-        if ($this->isBundle == 'true') {
+        if ($this->isBundle == true) {
             $this->validate([
                 'asset_quantity' => 'required',
             ]);
-        }
 
-        $asset = AssetModel::create([
-            'name' => $this->asset_name,
-            'category_id' => $this->asset_category,
-            'description' => $this->asset_description,
-            'remarks' => $this->asset_remarks,
-            'price' => $this->asset_price,
-            'serial_number' => $this->asset_serial_number,
-        ]);
+            $asset = AssetModel::create([
+                'name' => $this->asset_name,
+                'category_id' => $this->asset_category,
+                'description' => $this->asset_description,
+                'remarks' => $this->asset_remarks,
+                'price' => $this->asset_price,
+                'serial_number' => $this->asset_serial_number,
+            ]);
 
-        if ($this->isBundle == 'true') {
             Inventory::create([
                 'asset_id' => $asset->id,
                 'quantity' => $this->asset_quantity,
                 'inventory_code' => $inventory_code,
-                'isBundle' => true,
+                'is_bundle' => true,
             ]);
+
+            $this->reset([
+                'asset_name',
+                'asset_category',
+                'asset_description',
+                'asset_quantity',
+                'asset_remarks',
+                'asset_price',
+                'asset_serial_number',
+            ]);
+
+            $this->notification()->success(
+                $title = 'Success',
+                $description = 'Asset was successfull saved'
+            );
+
+            $this->add_modal = false;
         } else {
+            $asset = AssetModel::create([
+                'name' => $this->asset_name,
+                'category_id' => $this->asset_category,
+                'description' => $this->asset_description,
+                'remarks' => $this->asset_remarks,
+                'price' => $this->asset_price,
+                'serial_number' => $this->asset_serial_number,
+            ]);
+
             Inventory::create([
                 'asset_id' => $asset->id,
                 'inventory_code' => $inventory_code,
                 'is_bundle' => false,
             ]);
+
+            $this->reset([
+                'asset_name',
+                'asset_category',
+                'asset_description',
+                'asset_quantity',
+                'asset_remarks',
+                'asset_price',
+                'asset_serial_number',
+            ]);
+
+            $this->notification()->success(
+                $title = 'Success',
+                $description = 'Asset was successfull saved'
+            );
+
+            $this->add_modal = false;
         }
-
-        $this->asset_name = '';
-        $this->asset_category = '';
-        $this->asset_description = '';
-        $this->asset_quantity = '';
-
-        $this->notification()->success(
-            $title = 'Success',
-            $description = 'Asset was successfull saved'
-        );
-
-        $this->add_modal = false;
     }
 }

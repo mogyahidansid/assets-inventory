@@ -59,9 +59,6 @@ Route::prefix('/admin')
         Route::get('/borrowed-assets', fn() => view('admin.borrow'))->name(
             'admin.borrow'
         );
-        Route::get('/borrowed-assets/{id}', fn() => view('admin.borrow'))->name(
-            'admin.borrow'
-        );
     });
 
 // Employee Routes
