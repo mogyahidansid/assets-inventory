@@ -12,10 +12,12 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('request_transactions', function (Blueprint $table) {
+        Schema::create('temporary_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained();
-            $table->foreignId('asset_id')->constrained();
+            $table->unsignedBigInteger('request_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('asset_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('request_transactions');
+        Schema::dropIfExists('temporary_requests');
     }
 };

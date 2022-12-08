@@ -54,12 +54,16 @@ class Home extends Component
 
     public function confirmRequest()
     {
+        // dd($this->return_date);
         $code = 'RN' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
 
         $transaction = Transaction::create([
             'transaction_code' => $code,
             'user_id' => auth()->user()->id,
-            'return_date' => $this->return_date,
+            'returned_date' => $this->return_date,
+            'borrowed_date' => now(),
+            'accountable_person' => auth()->user()->employeeInformation
+                ->department->name,
         ]);
 
         foreach ($this->category_get as $key => $item) {
@@ -75,6 +79,8 @@ class Home extends Component
             $description = 'Your request has been sent.'
         );
         $this->category_get = [];
+
+        return redirect()->route('employee.request');
     }
 
     public function confirmDialog()

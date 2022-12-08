@@ -1,22 +1,24 @@
 <div>
-  <header>
-    <h2 class="text-xl font-bold leading-7 text-gray-700 sm:truncate sm:text-xl sm:tracking-tight">REQUESTED ASSETS
-    </h2>
-  </header>
+
   <div class="mt-10">
-    <div class="overflow-hidden bg-white shadow sm:rounded-md">
-      <div class="flex justify-end">
-        <x-native-select wire:model="filter_id">
-          <option selected hidden>Filter by Status</option>
-          <option value="1">Pending</option>
-          <option value="2">Accepted</option>
-          <option value="3">Declined</option>
-          <option value="4">Returned</option>
-        </x-native-select>
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <div class="search flex items-center rounded-lg  px-3 py-1 w-72 border shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-gray-500" width="24" height="24">
+            <path fill="none" d="M0 0h24v24H0z" />
+            <path
+              d="M11 2c4.968 0 9 4.032 9 9s-4.032 9-9 9-9-4.032-9-9 4.032-9 9-9zm0 16c3.867 0 7-3.133 7-7 0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7zm8.485.071l2.829 2.828-1.415 1.415-2.828-2.829 1.414-1.414z" />
+          </svg>
+          <input type="text" wire:model="search"
+            class="outline:none  h-8 focus:ring-0 flex-1 border-0 focus:border-0" placeholder="Search transaction...">
+        </div>
       </div>
+
+    </div>
+    <div class="overflow-hidden mt-5 bg-white shadow sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
-        @forelse ($transactions as $transaction)
-          <li>
+        @forelse ($transactions as $key => $transaction)
+          <li wire:key="{{ $key }}" wire:click="manageBorrow({{ $transaction->id }})">
             <a href="#" class="block hover:bg-gray-50">
               <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -80,11 +82,52 @@
           </li>
           @empty
             <div class="mt-10">
-              <h1 class="text-center text-gray-500">No Requested Assets...</h1>
+              <h1 class="text-center text-gray-500">No transaction found</h1>
             </div>
           @endforelse
         </ul>
       </div>
 
     </div>
+
+    <x-modal align="center" wire:model.defer="manage_borrow">
+      <x-card title=" TRANSACTION CODE: {{ $transaction_code }}">
+        <div>
+          <div class="">
+            <h3 class="text-xs text-gray-500">Borrowed Date:</h3>
+            <p class=" font-semibold text-green-600">{{ \Carbon\Carbon::parse($borrowed)->format('F d, Y') }}</p>
+          </div>
+          <div class="mt-2">
+            <h3 class="text-xs text-gray-500">Returned Date:</h3>
+            <p class=" font-semibold text-green-600">{{ \Carbon\Carbon::parse($return)->format('F d, Y') }}</p>
+          </div>
+        </div>
+        <div class="mt-5  border-t-2">
+          @php
+            $requestTransactions = \App\Models\RequestTransaction::whereIn('request_id', $requests)->get();
+          @endphp
+
+          @foreach ($requestTransactions as $key => $item)
+            <div wire:key="{{ $key }}" class="flex mt-2 border-b justify-between">
+              <div>
+                <h1 class="font-bold text-gray-700">{{ $item->asset->name }}</h1>
+                <p class="text-xs text-gray-500">Serial Number: {{ $item->asset->serial_number }}</p>
+                <p class="text-xs text-gray-500">Last remarks: {{ $item->asset->remarks }}</p>
+              </div>
+              <div class="w-72 border-l p-1">
+                <x-textarea wire:model="new_remarks.{{ $item->id }}" label="New Remarks" placeholder="" />
+              </div>
+            </div>
+          @endforeach
+        </div>
+
+        <x-slot name="footer">
+          <div class="flex justify-end gap-x-2">
+            <x-button dark negative label="Cancel" x-on:click="close" />
+            <x-button wire:click="returnAsset" right-icon="reply" positive label="Returned Assets" />
+          </div>
+        </x-slot>
+      </x-card>
+    </x-modal>
+
   </div>

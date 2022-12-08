@@ -20,4 +20,9 @@ class Request extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function requestTransactions()
+    {
+        return $this->hasMany(RequestTransaction::class);
+    }
 }

@@ -29,12 +29,14 @@ class Asset extends Component
     {
         return view('livewire.admin.asset', [
             'categories' => Category::all(),
-            'inventories' => Inventory::with('assets')
-                ->when($this->filter_id, function ($query) {
-                    $query->whereHas('assets', function ($query) {
-                        $query->where('category_id', $this->filter_id);
-                    });
-                })
+            'inventories' => Inventory::when($this->filter_id, function (
+                $query
+            ) {
+                $query->whereHas('assets', function ($q) {
+                    $q->where('category_id', $this->filter_id);
+                });
+            })
+                ->with('assets.category')
                 ->get(),
         ]);
     }

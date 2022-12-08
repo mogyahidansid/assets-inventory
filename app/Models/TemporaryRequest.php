@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RequestTransaction extends Model
+class TemporaryRequest extends Model
 {
     use HasFactory;
-
     protected $guarded = [];
-
-    public function request()
-    {
-        return $this->belongsTo(Request::class);
-    }
 
     public function asset()
     {
         return $this->belongsTo(Asset::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

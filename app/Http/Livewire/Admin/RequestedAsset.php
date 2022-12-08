@@ -14,7 +14,7 @@ class RequestedAsset extends Component
     public function render()
     {
         return view('livewire.admin.requested-asset', [
-            'transactions' => Transaction::get(),
+            'transactions' => Transaction::whereIn('status', [1, 3])->get(),
         ]);
     }
 

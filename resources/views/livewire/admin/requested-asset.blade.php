@@ -44,7 +44,7 @@
                       clip-rule="evenodd" />
                   </svg>
                   <span
-                    class="text-sm font-semibold">{{ \Carbon\Carbon::parse($transaction->return_date)->format('F d, Y') }}</span>
+                    class="text-sm font-semibold">{{ \Carbon\Carbon::parse($transaction->returned_date)->format('F d, Y') }}</span>
                 </div>
               </div>
 
@@ -59,11 +59,14 @@
             </div>
           </div>
           <div class="px-4 mb-2">
-            <x-button label="Open Request" wire:click="openRequest({{ $transaction->id }})" sm slate
+            <x-button label="Open Request" href="{{ route('admin.manage-request', ['id' => $transaction->id]) }}" sm slate
               right-icon="arrow-narrow-right" class="w-full" />
           </div>
         </li>
         @empty
+          <div class="col-span-4 mt-10">
+            <h1 class="text-center text-gray-500">No Requested Asset...</h1>
+          </div>
         @endforelse
 
         <!-- More people... -->

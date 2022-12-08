@@ -31,6 +31,7 @@
 
 <body class="font-rubik antialiased">
   <x-notifications z-index="z-50" />
+  <x-dialog z-index="z-50" blur="md" align="center" />
   {{-- <div class="bg-red-500 border-r fixed w-[18rem] h-screen">
     <div class="px-3">
       <img src="{{ asset('assets/logo.png') }}" alt="" class="h-20">

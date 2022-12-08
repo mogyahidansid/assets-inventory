@@ -49,19 +49,20 @@ Route::prefix('/admin')
         'admin',
     ])
     ->group(function () {
-        Route::get('/dashboard', fn () => view('admin.dashboard'))->name(
+        Route::get('/dashboard', fn() => view('admin.dashboard'))->name(
             'admin.dashboard'
         );
-        Route::get('/assets', fn () => view('admin.asset'))->name('admin.asset');
-        Route::get('/request-assets', fn () => view('admin.request'))->name(
+        Route::get('/assets', fn() => view('admin.asset'))->name('admin.asset');
+        Route::get('/request-assets', fn() => view('admin.request'))->name(
             'admin.request'
         );
-        Route::get('/borrowed-assets', fn () => view('admin.borrow'))->name(
+        Route::get('/borrowed-assets', fn() => view('admin.borrow'))->name(
             'admin.borrow'
         );
-        // Route::get('/borrowed-assets/{id}', fn () => view('admin.borrow'))->name(
-        //     'admin.borrow'
-        // );
+        Route::get(
+            '/request-assets/{id}',
+            fn() => view('admin.manage-request')
+        )->name('admin.manage-request');
     });
 
 // Employee Routes
@@ -74,14 +75,14 @@ Route::prefix('/employee')
         'employee',
     ])
     ->group(function () {
-        Route::get('/dashboard', fn () => view('employee.dashboard'))->name(
+        Route::get('/dashboard', fn() => view('employee.dashboard'))->name(
             'employee.dashboard'
         );
-        Route::get('/requests', fn () => view('employee.request'))->name(
+        Route::get('/requests', fn() => view('employee.request'))->name(
             'employee.request'
         );
         Route::get(
             '/transaction-history',
-            fn () => view('employee.history')
+            fn() => view('employee.history')
         )->name('employee.history');
     });

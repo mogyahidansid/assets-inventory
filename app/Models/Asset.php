@@ -14,4 +14,14 @@ class Asset extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function temporary_requests()
+    {
+        return $this->hasMany(TemporaryRequest::class);
+    }
+
+    public function requestTransactions()
+    {
+        return $this->hasMany(RequestTransaction::class);
+    }
 }

@@ -126,7 +126,7 @@
         </div>
       </div>
       <div>
-        <x-datetime-picker label="Return Date" without-time placeholder="" wire:model.defer="normalPicker" />
+        <x-datetime-picker label="Return Date" without-time placeholder="" wire:model.defer="return_date" />
         <div class="mt-5">
           <h1 class="text-gray-600 text-xs">Accountable Person</h1>
           <span class="text-gray-700 underline">{{ auth()->user()->employeeInformation->department->name }}</span>
@@ -156,29 +156,11 @@
         @foreach ($category_get as $item)
           <div class="bg-white p-1 px-4">
             <h1 class="font-semibold  uppercase text-green-700">{{ $item['name'] }}</h1>
-            <h1 class="leading-3">x {{ $item['qty'] }}</h1>
+            <h1 class="leading-3 text-sm">x {{ $item['qty'] }}</h1>
           </div>
         @endforeach
       </div>
     </div>
-    {{-- <div class="mt-3">
-      <h1 class="font-semibold text-gray-600">Your Personal Information</h1>
-      <div class="border-l-2 px-2 border-green-700">
-        <div class="mt-2">
-          <h1 class="text-gray-600 text-xs">Full Name</h1>
-          <span class="text-gray-700">{{ auth()->user()->employeeInformation->firstname }}
-            {{ auth()->user()->employeeInformation->lastname }}</span>
-        </div>
-        <div class="mt-2">
-          <h1 class="text-gray-600 text-xs">Address</h1>
-          <span class="text-gray-700">{{ auth()->user()->employeeInformation->address }}</span>
-        </div>
-        <div class="mt-2">
-          <h1 class="text-gray-600 text-xs">Phone Number</h1>
-          <span class="text-gray-700">{{ auth()->user()->employeeInformation->contact }}</span>
-        </div>
-      </div>
-    </div> --}}
     <x-slot name="footer">
       <div class="flex justify-end items-center space-x-2">
         <x-button wire:click="$set('request_form', false)" label="Cancel" negative />

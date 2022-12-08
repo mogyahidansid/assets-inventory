@@ -18,7 +18,7 @@
         <x-native-select wire:model="filter_id">
           <option selected hidden>Filter by Category</option>
           @forelse ($categories as $item)
-            <option value="{{ $item->id }}">{{ $item->name }}</option>
+            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
           @empty
             <option>No Categories Available</option>
           @endforelse
@@ -97,12 +97,14 @@
   </div>
 
   <x-modal.card title="Manage Category" z-index="z-40" max-width="md" wire:model.defer="manage_category">
-    <div class="border px-3 py-1">
-      <x-input wire:model="category_name" label="Category name" placeholder="" />
-      <div class="mt-1 flex justify-end">
-        <x-button wire:click="saveCategory" label="Save" xs positive />
+    <form action="">
+      <div class="border px-3 py-1">
+        <x-input wire:model="category_name" label="Category name" placeholder="" />
+        <div class="mt-1 flex justify-end">
+          <x-button wire:click="saveCategory" label="Save" xs positive />
+        </div>
       </div>
-    </div>
+    </form>
     <div class="mt-2 mb-2">
       <div>
         <div class="mt-5 px-2 flow-root">
