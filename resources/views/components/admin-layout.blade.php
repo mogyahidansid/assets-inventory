@@ -32,104 +32,14 @@
 <body class="font-rubik antialiased">
   <x-notifications z-index="z-50" />
   <x-dialog z-index="z-50" blur="md" align="center" />
-  {{-- <div class="bg-red-500 border-r fixed w-[18rem] h-screen">
-    <div class="px-3">
-      <img src="{{ asset('assets/logo.png') }}" alt="" class="h-20">
-      <h1>IMAN</h1>
-
-      <ul class="mt-5 text-zinc-800">
-        <li class="p-3 rounded-lg bg-gradient-to-r from-cgreen via-cgreen/80 to-cyellow/80 text-white mb-1">
-          <a href="#" class="flex items-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21">
-              <path class="fill-current"
-                d="M3 10h18v10.004c0 .55-.445.996-.993.996H3.993A.994.994 0 0 1 3 20.004V10zm6 2v2h6v-2H9zM2 4c0-.552.455-1 .992-1h18.016c.548 0 .992.444.992 1v4H2V4z" />
-            </svg>
-            <span>Assets</span>
-          </a>
-        </li>
-
-        <li class="p-3">
-          <a href="#" class="flex items-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21">
-              <path class="fill-current"
-                d="M17 2v2h3.007c.548 0 .993.445.993.993v16.014c0 .548-.445.993-.993.993H3.993C3.445 22 3 21.555 3 21.007V4.993C3 4.445 3.445 4 3.993 4H7V2h10zM7 6H5v14h14V6h-2v2H7V6zm2 10v2H7v-2h2zm0-3v2H7v-2h2zm0-3v2H7v-2h2zm6-6H9v2h6V4z" />
-            </svg>
-            <span>Request Assets</span>
-          </a>
-        </li>
-
-        <li class="p-3">
-          <a href="#" class="flex items-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21">
-              <path class="fill-current"
-                d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
-            </svg>
-            <span>Borrow History</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div> --}}
-
-  <!--
-  This example requires some changes to your config:
   
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-  <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
   <div>
-    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
-      <!--
-        Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-  
-        Entering: "transition-opacity ease-linear duration-300"
-          From: "opacity-0"
-          To: "opacity-100"
-        Leaving: "transition-opacity ease-linear duration-300"
-          From: "opacity-100"
-          To: "opacity-0"
-      -->
+
       <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
       <div class="fixed inset-0 z-40 flex">
-        <!--
-          Off-canvas menu, show/hide based on off-canvas menu state.
-  
-          Entering: "transition ease-in-out duration-300 transform"
-            From: "-translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transition ease-in-out duration-300 transform"
-            From: "translate-x-0"
-            To: "-translate-x-full"
-        -->
         <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
-          <!--
-            Close button, show/hide based on off-canvas menu state.
-  
-            Entering: "ease-in-out duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "ease-in-out duration-300"
-              From: "opacity-100"
-              To: "opacity-0"
-          -->
           <div class="absolute top-0 right-0 -mr-12 pt-2">
             <button type="button"
               class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -148,14 +58,8 @@
           </div>
           <div class="mt-5 h-0 flex-1 overflow-y-auto">
             <nav class="space-y-1 px-2">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <a href="#"
                 class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!--
-                  Heroicon name: outline/home
-  
-                  Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
-                -->
                 <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -166,7 +70,6 @@
 
               <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
-                <!-- Heroicon name: outline/users -->
                 <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                   stroke="currentColor" aria-hidden="true">
@@ -290,7 +193,7 @@
       </div>
     </div>
     <div class="flex flex-col md:pl-64">
-      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow" x-data="{ notifModal : false }">
         <button type="button"
           class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
           <span class="sr-only">Open sidebar</span>
@@ -307,14 +210,7 @@
             </div>
           </div>
           <div class="ml-4 flex items-center md:ml-6">
-            <button x-on:click="message = !message"
-              class="bg-gray-300 hover:bg-green-500 hover:fill-white fill-gray-700 h-8 grid place-content-center rounded-xl w-8 relative before:absolute before:h-3 before:w-3 before:-top-1 before:-right-1 before:bg-red-500 before:rounded-full before:animate-pulse">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path
-                  d="M22 20H2v-2h1v-6.969C3 6.043 7.03 2 12 2s9 4.043 9 9.031V18h1v2zM9.5 21h5a2.5 2.5 0 1 1-5 0z" />
-              </svg>
-            </button>
+            <livewire:notification />
 
             <!-- Profile dropdown -->
             <div class="relative ml-5" x-data="{ userdropdown: false }">
@@ -328,17 +224,6 @@
                     alt="">
                 </button>
               </div>
-
-              <!--
-                Dropdown menu, show/hide based on menu state.
-  
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
               <div x-show="userdropdown" x-cloak x-transition:enter="transition ease-out duration-100"
                 x-transition:enter-start="transform opacity-0 scale-95"
                 x-transition:enter-end="transform opacity-100 scale-100"
@@ -347,8 +232,6 @@
                 x-transition:leave-end="transform opacity-0 scale-95"
                 class="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-
-
 
                 <div class="flex flex-shrink-0  px-4 py-2">
                   <div class="group block w-full flex-shrink-0">
@@ -377,7 +260,7 @@
                         @csrf
                         <a href="{{ route('logout') }}"
                           onclick="event.preventDefault();
-            this.closest('form').submit();"
+                          this.closest('form').submit();"
                           class="flex space-x-1 items-center text-sm hover:text-green-800 hover:fill-green-800 text-gray-700 fill-gray-700">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5">
                             <path fill="none" d="M0 0h24v24H0z" />
@@ -395,6 +278,7 @@
           </div>
         </div>
       </div>
+
 
       <main class="flex-1">
         {{ $slot }}

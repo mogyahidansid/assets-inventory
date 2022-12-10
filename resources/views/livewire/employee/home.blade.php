@@ -126,7 +126,11 @@
         </div>
       </div>
       <div>
-        <x-datetime-picker label="Return Date" without-time placeholder="" wire:model.defer="return_date" />
+        <x-datetime-picker 
+        label="Return Date" 
+        without-time placeholder="" 
+        :min="now()"
+        wire:model.defer="return_date" />
         <div class="mt-5">
           <h1 class="text-gray-600 text-xs">Accountable Person</h1>
           <span class="text-gray-700 underline">{{ auth()->user()->employeeInformation->department->name }}</span>
