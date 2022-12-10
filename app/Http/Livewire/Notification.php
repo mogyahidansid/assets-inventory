@@ -16,7 +16,7 @@ class Notification extends Component
     public function getListeners()
     {
         return [
-            "echo-private:requestNotif.{$this->userId},RequestNotificationEvent" => '$refresh',
+            "echo-private:notification.{$this->userId},RequestNotificationEvent" => '$refresh',
         ];
     }
 

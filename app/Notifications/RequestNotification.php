@@ -18,6 +18,7 @@ class RequestNotification extends Notification
      */
 
     private $requestData = [];
+
     public function __construct($requestData = [])
     {
         $this->requestData = $requestData;
@@ -57,7 +58,7 @@ class RequestNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'employeeId' => $this->requestData['employeeId'],
+            // 'employeeId' => $this->requestData['employeeId'],
             'message' => $this->requestData['message'],
             // 'action' => $this->requestData['action']
         ];
