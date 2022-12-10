@@ -82,13 +82,12 @@ class Home extends Component
 
         // Notifications
         $notifToEmployee = [
-            // 'employeeId' => auth()->user()->id,
-            'message' => auth()->user()->name . " is requesting ",
+            'employeeId' => auth()->user()->id,
+            'message' => auth()->user()->name . ' is requesting ',
         ];
 
         event(new \App\Events\RequestNotificationEvent($adminId->id));
         $adminId->notify(new RequestNotification($notifToEmployee));
-
 
         $this->request_form = false;
         $this->notification()->success(

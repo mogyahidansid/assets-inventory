@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->date('returned_date');
             $table->string('accountable_person');
             $table->integer('status')->default(1);
+            $table->longText('remarks')->nullable();
             $table->timestamps();
         });
     }

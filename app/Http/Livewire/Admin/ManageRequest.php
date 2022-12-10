@@ -20,6 +20,9 @@ class ManageRequest extends Component
     public $collections;
     public $requestor;
     public $requests_id;
+    public $remarks;
+
+    public $decline_modal = false;
 
     public function mount()
     {
@@ -130,5 +133,21 @@ class ManageRequest extends Component
             $title = 'Success',
             $description = 'Item has been removed'
         );
+    }
+
+    public function declineRequest()
+    {
+        $transaction = Transaction::where('id', $this->request_id)->first();
+        $transaction->update([
+            'status' => 4,
+            'remarks' => $this->remarks,
+        ]);
+
+        $this->dialog()->success(
+            $title = 'Request',
+            $description = 'Request has been declined'
+        );
+
+        return redirect()->route('admin.request');
     }
 }

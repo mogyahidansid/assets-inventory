@@ -50,7 +50,7 @@
     <div class="absolute bottom-0 left-32 xl:left-24">
       <img src="{{ asset('assets/IMAnLogo.png') }}" class="opacity-40" alt="">
     </div>
-    <div class="bg-white w-[30rem] p-5 rounded-md shadow">
+    <div class="bg-white w-[30rem] z-50 p-5 rounded-md shadow">
       <div class="flex items-center space-x-2">
         <img src="{{ asset('assets/IMAnLogo.png') }}" alt="" class="w-20">
         <h1 class="font-black text-cgreen uppercase">Integrated Mindanaons Association for Natives (iman)</h1>
