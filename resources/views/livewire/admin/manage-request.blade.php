@@ -67,7 +67,7 @@
 
                       @forelse ($gets as $item)
                         <li>
-                          <span class="bg-gray-500 p-0.5 text-white rounded-lg px-2">{{ $item->asset->name }}
+                          <span class="bg-gray-500 p-0.5 s text-white rounded-lg px-2">{{ $item->asset->name }}
                             <x-button.circle negative xs icon="trash" wire:click="removeItem({{ $item->id }})" />
                           </span>
                         </li>
