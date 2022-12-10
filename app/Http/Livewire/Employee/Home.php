@@ -79,22 +79,23 @@ class Home extends Component
                 'transaction_id' => $transaction->id,
             ]);
         }
-        $this->request_form = false;
-        $this->notification()->success(
-            $title = 'Success',
-            $description = 'Your request has been sent.'
-        );
-        $this->category_get = [];
 
         // Notifications
         $notifToEmployee = [
-            'employeeId' => auth()->user()->id,
+            // 'employeeId' => auth()->user()->id,
             'message' => auth()->user()->name . " is requesting ",
         ];
 
         event(new \App\Events\RequestNotificationEvent($adminId->id));
         $adminId->notify(new RequestNotification($notifToEmployee));
 
+
+        $this->request_form = false;
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Your request has been sent.'
+        );
+        $this->category_get = [];
         return redirect()->route('employee.request');
     }
 

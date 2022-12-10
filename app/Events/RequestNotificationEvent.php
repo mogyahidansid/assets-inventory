@@ -34,6 +34,6 @@ class RequestNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('requestNotif' . $this->userId);
+        return new PrivateChannel('notification.' . $this->userId);
     }
 }

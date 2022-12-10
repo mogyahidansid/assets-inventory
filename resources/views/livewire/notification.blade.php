@@ -12,7 +12,7 @@
     </button>
 
     <!-- Notifications Container -->
-    <div class="bg-white w-[25rem] absolute top-14 right-5 max-h-[37rem] rounded-md border shadow" x-show="notifModal"
+    <div class="bg-white w-[25rem] absolute top-14 right-5 max-h-[20rem] rounded-md border shadow" x-show="notifModal"
         @click.away="notifModal = false">
         <section class="flex items-center justify-between p-3">
             <div class="relative">
@@ -21,7 +21,7 @@
             <button class="text-sm text-cgreen/80 hover:text-cgreen underline">Mark all as read</button>
         </section>
     
-        <div class="mt-2 divide-y">
+        <div class="mt-1 divide-y">
             @forelse (auth()->user()->unreadNotifications as $notification)
                 <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
                     <div class="flex items-center space-x-2">
