@@ -9,6 +9,8 @@ use App\Models\Asset;
 use App\Models\Transaction;
 use App\Models\Request as RequestModel;
 use App\Models\RequestTransaction;
+use App\Models\User;
+use App\Notifications\RequestNotification;
 
 class Home extends Component
 {
@@ -16,6 +18,8 @@ class Home extends Component
     public $category_get = [];
     public $request_form = false;
     public $return_date;
+
+    public $reqQty;
 
     public function render()
     {
@@ -57,6 +61,8 @@ class Home extends Component
         // dd($this->return_date);
         $code = 'RN' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
 
+        $adminId = User::where('role', 1)->first();
+
         $transaction = Transaction::create([
             'transaction_code' => $code,
             'user_id' => auth()->user()->id,
@@ -79,6 +85,15 @@ class Home extends Component
             $description = 'Your request has been sent.'
         );
         $this->category_get = [];
+
+        // Notifications
+        $notifToEmployee = [
+            'employeeId' => auth()->user()->id,
+            'message' => auth()->user()->name . " is requesting ",
+        ];
+
+        event(new \App\Events\RequestNotificationEvent($adminId->id));
+        $adminId->notify(new RequestNotification($notifToEmployee));
 
         return redirect()->route('employee.request');
     }
