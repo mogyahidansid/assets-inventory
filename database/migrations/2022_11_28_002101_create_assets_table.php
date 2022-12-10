@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->longText('remarks');
             $table->string('serial_number');
             $table->foreignId('category_id')->constrained();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

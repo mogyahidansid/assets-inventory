@@ -11,7 +11,6 @@
           <option value="1">Pending</option>
           <option value="2">Accepted</option>
           <option value="3">Declined</option>
-          <option value="4">Returned</option>
         </x-native-select>
       </div>
       <ul role="list" class="divide-y divide-gray-200">

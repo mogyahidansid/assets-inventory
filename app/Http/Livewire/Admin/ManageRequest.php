@@ -37,9 +37,11 @@ class ManageRequest extends Component
     public function getAssets()
     {
         if ($this->category_id != null) {
-            return Asset::when($this->category_id, function ($query) {
-                return $query->where('category_id', $this->category_id);
-            })->get();
+            return Asset::where('status', '1')
+                ->when($this->category_id, function ($query) {
+                    return $query->where('category_id', $this->category_id);
+                })
+                ->get();
         } else {
             return Asset::all();
         }

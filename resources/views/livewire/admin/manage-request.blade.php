@@ -49,7 +49,8 @@
                       </span>
                     </div>
                     <div class="ml-4 flex-shrink-0">
-                      <x-button slate xs right-icon="arrow-narrow-right"
+                      <x-button slate xs
+                        spinner="manageItem({{ $item->category_id }},{{ $item->transaction->user_id }},{{ $item->id }})"
                         wire:click="manageItem({{ $item->category_id }},{{ $item->transaction->user_id }},{{ $item->id }})"
                         label="manage" />
                     </div>

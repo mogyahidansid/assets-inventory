@@ -12,6 +12,7 @@ class Request extends Component
     {
         return view('livewire.employee.request', [
             'transactions' => Transaction::where('user_id', auth()->user()->id)
+                ->where('status', '!=', 4)
                 ->when($this->filter_id, function ($query) {
                     $query->where('status', $this->filter_id);
                 })
