@@ -66,7 +66,11 @@
 
 
                       @forelse ($gets as $item)
-                        <li> {{ $item->asset->name }}</li>
+                        <li>
+                          <span class="bg-gray-500 p-0.5 text-white rounded-lg px-2">{{ $item->asset->name }}
+                            <x-button.circle negative xs icon="trash" wire:click="removeItem({{ $item->id }})" />
+                          </span>
+                        </li>
                       @empty
                       @endforelse
                     </ul>
@@ -95,10 +99,10 @@
                   <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                     <div class="truncate">
                       <div class="flex text-sm">
-                        <p class="truncate font-medium text-green-700">{{ $asset->name }}</p>
+                        <p class="truncate font-medium uppercase text-green-700">{{ $asset->name }}</p>
 
                       </div>
-                      <div class="mt-1 flex">
+                      <div class=" flex">
                         <div class="flex items-center text-sm text-gray-500">
                           <p class="truncate  text-gray-700">{{ $asset->description }}</p>
                         </div>

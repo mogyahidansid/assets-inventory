@@ -121,4 +121,14 @@ class ManageRequest extends Component
 
         return redirect()->route('admin.request');
     }
+
+    public function removeItem($request_id)
+    {
+        $item = TemporaryRequest::where('id', $request_id)->first();
+        $item->delete();
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Item has been removed'
+        );
+    }
 }

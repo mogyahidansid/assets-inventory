@@ -4,15 +4,15 @@
     </h2>
   </header>
   <div class="mt-10">
-    <div class="overflow-hidden bg-white shadow sm:rounded-md">
-      <div class="flex justify-end">
-        <x-native-select wire:model="filter_id">
-          <option selected hidden>Filter by Status</option>
-          <option value="1">Pending</option>
-          <option value="2">Accepted</option>
-          <option value="3">Declined</option>
-        </x-native-select>
-      </div>
+    <div class="flex justify-end">
+      <x-native-select wire:model="filter_id">
+        <option selected hidden>Filter by Status</option>
+        <option value="1">Pending</option>
+        <option value="2">Accepted</option>
+        <option value="3">Declined</option>
+      </x-native-select>
+    </div>
+    <div class="overflow-hidden mt-5 bg-white shadow sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
         @forelse ($transactions as $transaction)
           <li>
