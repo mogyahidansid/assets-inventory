@@ -7,9 +7,7 @@
       <!-- Replace with your content -->
       <div class="py-4">
         <livewire:admin.asset />
-
       </div>
-      <!-- /End replace -->
     </div>
   </div>
 </x-admin-layout>

@@ -10,6 +10,9 @@ use App\Models\Category;
 use WireUi\Traits\Actions;
 use App\Models\TemporaryRequest;
 use App\Models\RequestTransaction;
+use App\Models\User;
+use App\Notifications\RequestNotification;
+
 class ManageRequest extends Component
 {
     use Actions;
@@ -112,10 +115,23 @@ class ManageRequest extends Component
                 $request->category_id
             )->delete();
         }
+        // ->update(['status' => 2])
+        $employeeId = Transaction::where('id', $this->request_id)->first();
+        $employeeId->update(['status' => 2]);
+        $employeeId->save();
 
-        Transaction::where('id', $this->request_id)->update([
-            'status' => 2,
-        ]);
+        $userEmployee = User::where('id', $employeeId->user_id)->first();
+
+        if ($employeeId) {
+            // Notifications
+            $notifToEmployee = [
+                'employeeId' => auth()->user()->id,
+                'message' => 'The admin approved your request ',
+            ];
+
+            event(new \App\Events\RequestNotificationEvent($employeeId->user_id));
+            $userEmployee->notify(new RequestNotification($notifToEmployee));
+        }
 
         $this->dialog()->success(
             $title = 'Request',
