@@ -42,14 +42,3 @@
         </div>
     </div>
 </div>
-
-{{-- <button class="bg-white w-full py-2.5 px-3 text-left">
-    <div class="flex items-center space-x-2">
-
-        <img src="https://faces-img.xcdn.link/image-lorem-face-6688.jpg" alt="" class="w-10 h-10 rounded-lg">
-        <div class="font-normal leading-5">
-            <h1>Johnrey Supot is requesting an Asset.</h1>
-            <p class="text-gray-400 text-sm">4h ago</p>
-        </div>
-    </div>
-</button> --}}
