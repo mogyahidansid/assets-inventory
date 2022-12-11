@@ -49,7 +49,8 @@
                       </span>
                     </div>
                     <div class="ml-4 flex-shrink-0">
-                      <x-button slate xs right-icon="arrow-narrow-right"
+                      <x-button slate xs
+                        spinner="manageItem({{ $item->category_id }},{{ $item->transaction->user_id }},{{ $item->id }})"
                         wire:click="manageItem({{ $item->category_id }},{{ $item->transaction->user_id }},{{ $item->id }})"
                         label="manage" />
                     </div>
@@ -65,7 +66,11 @@
 
 
                       @forelse ($gets as $item)
-                        <li> {{ $item->asset->name }}</li>
+                        <li>
+                          <span class="bg-gray-500 p-0.5 s text-white rounded-lg px-2">{{ $item->asset->name }}
+                            <x-button.circle negative xs icon="trash" wire:click="removeItem({{ $item->id }})" />
+                          </span>
+                        </li>
                       @empty
                       @endforelse
                     </ul>
@@ -79,10 +84,11 @@
     </div>
 
     <div class="mt-3 py-2 px-6 flex justify-end items-center space-x-2">
-      <x-button label="Decline" negative right-icon="thumb-down" />
+      <x-button label="Decline" wire:click="$set('decline_modal', true)" negative right-icon="thumb-down" />
       <x-button label="Accept" wire:click="acceptRequest" positive right-icon="thumb-up" />
     </div>
   </div>
+
   <x-modal align="center" z-index="z-40" wire:model.defer="manage_modal">
     <x-card title="Select Assets">
       <div class="overflow-hidden bg-white shadow sm:rounded-md">
@@ -94,10 +100,10 @@
                   <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                     <div class="truncate">
                       <div class="flex text-sm">
-                        <p class="truncate font-medium text-green-700">{{ $asset->name }}</p>
+                        <p class="truncate font-medium uppercase text-green-700">{{ $asset->name }}</p>
 
                       </div>
-                      <div class="mt-1 flex">
+                      <div class=" flex">
                         <div class="flex items-center text-sm text-gray-500">
                           <p class="truncate  text-gray-700">{{ $asset->description }}</p>
                         </div>
@@ -118,6 +124,34 @@
       <x-slot name="footer">
         <div class="flex justify-end gap-x-4">
           <x-button negative flat label="Cancel" x-on:click="close" />
+        </div>
+      </x-slot>
+    </x-card>
+  </x-modal>
+
+  <x-modal align="center" wire:model.defer="decline_modal">
+    <x-card>
+      <div class="flex space-x-2 px-4">
+        <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+          </svg>
+        </div>
+        <div class="py-1 flex-1">
+          <h1 class="font-bold text-lg text-gray-600">Remarks</h1>
+          <p class="font-xs text-gray-400">Please input your reason to decline the request.</p>
+
+          <div class="mt-4">
+            <x-textarea label="Your Remarks:" wire:model.defer="remarks" placeholder="write your remarks" />
+          </div>
+        </div>
+      </div>
+
+      <x-slot name="footer">
+        <div class="flex justify-end gap-x-3">
+          <x-button flat negative label="Cancel" x-on:click="close" />
+          <x-button wire:click="declineRequest" positive label="Decline and Send it." />
         </div>
       </x-slot>
     </x-card>

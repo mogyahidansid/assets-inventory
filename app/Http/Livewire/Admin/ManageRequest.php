@@ -20,6 +20,9 @@ class ManageRequest extends Component
     public $collections;
     public $requestor;
     public $requests_id;
+    public $remarks;
+
+    public $decline_modal = false;
 
     public function mount()
     {
@@ -37,9 +40,11 @@ class ManageRequest extends Component
     public function getAssets()
     {
         if ($this->category_id != null) {
-            return Asset::when($this->category_id, function ($query) {
-                return $query->where('category_id', $this->category_id);
-            })->get();
+            return Asset::where('status', '1')
+                ->when($this->category_id, function ($query) {
+                    return $query->where('category_id', $this->category_id);
+                })
+                ->get();
         } else {
             return Asset::all();
         }
@@ -115,6 +120,32 @@ class ManageRequest extends Component
         $this->dialog()->success(
             $title = 'Request',
             $description = 'Request has been accepted'
+        );
+
+        return redirect()->route('admin.request');
+    }
+
+    public function removeItem($request_id)
+    {
+        $item = TemporaryRequest::where('id', $request_id)->first();
+        $item->delete();
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Item has been removed'
+        );
+    }
+
+    public function declineRequest()
+    {
+        $transaction = Transaction::where('id', $this->request_id)->first();
+        $transaction->update([
+            'status' => 4,
+            'remarks' => $this->remarks,
+        ]);
+
+        $this->dialog()->success(
+            $title = 'Request',
+            $description = 'Request has been declined'
         );
 
         return redirect()->route('admin.request');

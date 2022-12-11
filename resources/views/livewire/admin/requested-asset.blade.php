@@ -54,7 +54,7 @@
               {{-- <img class="h-10 w-10 flex-shrink-0 rounded-full border-2 border-gray-400 shadow-md bg-gray-300"
               src="{{ $transaction->user->profile_photo_url }}" alt=""> --}}
               <x-avatar xl class="uppercase"
-                label="{{ $transaction->user->employeeInformation->firstname[0] }}{{ $transaction->user->employeeInformation->firstname[1] }}" />
+                label="{{ $transaction->user->employeeInformation->firstname[0] }}{{ $transaction->user->employeeInformation->lastname[0] }}" />
 
             </div>
           </div>

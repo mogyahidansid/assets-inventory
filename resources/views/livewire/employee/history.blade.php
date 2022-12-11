@@ -1,22 +1,11 @@
 <div>
-  <header>
-    <h2 class="text-xl font-bold leading-7 text-gray-700 sm:truncate sm:text-xl sm:tracking-tight">REQUESTED ASSETS
-    </h2>
-  </header>
   <div class="mt-10">
-    <div class="flex justify-end">
-      <x-native-select wire:model="filter_id">
-        <option selected hidden>Filter by Status</option>
-        <option value="1">Pending</option>
-        <option value="2">Accepted</option>
-        <option value="3">Declined</option>
-      </x-native-select>
-    </div>
-    <div class="overflow-hidden mt-5 bg-white shadow sm:rounded-md">
+
+    <div class="overflow-hidden bg-white shadow sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
         @forelse ($transactions as $transaction)
           <li>
-            <a href="#" class="block hover:bg-gray-50">
+            <a href="#" class="block border-red-400 border rounded-md hover:bg-gray-50">
               <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                   <div class="truncate">
@@ -44,20 +33,15 @@
                   </div>
                   <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5 flex space-x-10 items-center">
                     <div class="flex flex-col">
-                      <h1 class="text-xs text-gray-500 "> Requested Item:</h1>
-                      <h1 class="leading-3 font-semibold text-green-600"> {{ count($transaction->requests) }} Assets
-                      </h1>
+                      <h1 class="text-xs text-gray-500 "> Remarks:</h1>
+                      <p class="leading-3 font-semibold text-red-600"> {{ $transaction->remarks }}
+                      </p>
                     </div>
                     <div>
                       @switch($transaction->status)
-                        @case(1)
+                        @case(4)
                           <span
-                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Pending</span>
-                        @break
-
-                        @case(2)
-                          <span
-                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Accepted</span>
+                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Returned</span>
                         @break
 
                         @default

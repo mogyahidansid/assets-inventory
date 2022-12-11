@@ -63,6 +63,11 @@
                             class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Accepted</span>
                         @break
 
+                        @case(4)
+                          <span
+                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Returned</span>
+                        @break
+
                         @default
                       @endswitch
                     </div>
@@ -90,7 +95,7 @@
 
     </div>
 
-    <x-modal align="center" wire:model.defer="manage_borrow">
+    <x-modal align="center" z-index="40" wire:model.defer="manage_borrow">
       <x-card title=" TRANSACTION CODE: {{ $transaction_code }}">
         <div>
           <div class="">
@@ -99,23 +104,25 @@
           </div>
           <div class="mt-2">
             <h3 class="text-xs text-gray-500">Returned Date:</h3>
-            <p class=" font-semibold text-green-600">{{ \Carbon\Carbon::parse($return)->format('F d, Y') }}</p>
+            <p class=" font-semibold text-red-600">{{ \Carbon\Carbon::parse($return)->format('F d, Y') }}</p>
           </div>
         </div>
         <div class="mt-5  border-t-2">
           @php
-            $requestTransactions = \App\Models\RequestTransaction::whereIn('request_id', $requests)->get();
+            $requestTransactions = \App\Models\RequestTransaction::whereIn('asset_id', $requests)->get();
           @endphp
 
-          @foreach ($requestTransactions as $key => $item)
-            <div wire:key="{{ $key }}" class="flex mt-2 border-b justify-between">
+          {{-- @dump($requestTransactions) --}}
+          @foreach ($requestTransactions as $item)
+            <div class="flex mt-2 border-b justify-between">
               <div>
                 <h1 class="font-bold text-gray-700">{{ $item->asset->name }}</h1>
                 <p class="text-xs text-gray-500">Serial Number: {{ $item->asset->serial_number }}</p>
                 <p class="text-xs text-gray-500">Last remarks: {{ $item->asset->remarks }}</p>
+                {{ $item->asset->id }}
               </div>
               <div class="w-72 border-l p-1">
-                <x-textarea wire:model="new_remarks.{{ $item->id }}" label="New Remarks" placeholder="" />
+                <x-textarea wire:model="new_remarks.{{ $item->asset->id }}" label="New Remarks" placeholder="" />
               </div>
             </div>
           @endforeach
