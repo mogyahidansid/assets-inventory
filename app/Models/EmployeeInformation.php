@@ -19,4 +19,9 @@ class EmployeeInformation extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }

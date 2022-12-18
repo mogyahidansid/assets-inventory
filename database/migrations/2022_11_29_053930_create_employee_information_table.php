@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string('contact');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('department_id');
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

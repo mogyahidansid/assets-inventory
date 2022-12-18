@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string('name');
             $table->longText('description')->nullable();
             $table->string('price');
-            $table->longText('remarks');
+            $table->integer('remarks');
+            $table->longText('reason')->nullable();
             $table->string('serial_number');
             $table->foreignId('category_id')->constrained();
             $table->integer('status')->default(1);

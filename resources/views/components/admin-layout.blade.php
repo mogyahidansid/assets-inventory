@@ -32,7 +32,7 @@
 <body class="font-rubik antialiased">
   <x-notifications z-index="z-50" />
   <x-dialog z-index="z-50" blur="md" align="center" />
-  
+
   <div>
     <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">
 
@@ -146,45 +146,77 @@
           <h1 class="text-3xl font-extrabold text-white">IMAN</h1>
         </div>
         <div class="flex flex-1 flex-col overflow-y-auto">
-          <nav class="flex-1 space-y-1 px-2 py-4">
+          <nav class="flex-1">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="{{ route('admin.dashboard') }}"
-              class="{{ request()->routeIs('admin.dashboard') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
-                <path fill="none" d="M0 0H24V24H0z" />
-                <path
-                  d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm3.833 3.337c.237-.166.559-.138.763.067.204.204.23.526.063.76-2.18 3.046-3.38 4.678-3.598 4.897-.586.585-1.536.585-2.122 0-.585-.586-.585-1.536 0-2.122.374-.373 2.005-1.574 4.894-3.602zM17.5 11c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1zm-11 0c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1zm2.318-3.596c.39.39.39 1.023 0 1.414-.39.39-1.024.39-1.414 0-.39-.39-.39-1.024 0-1.414.39-.39 1.023-.39 1.414 0zM12 5.5c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" />
-              </svg>
-              Dashboard
-            </a>
-            <a href="{{ route('admin.asset') }}"
-              class="{{ request()->routeIs('admin.asset') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=" mr-3 flex-shrink-0 h-6 w-6">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path
-                  d="M22 20a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v16zm-11-5H4v4h7v-4zm9-4h-7v8h7v-8zm-9-6H4v8h7V5zm9 0h-7v4h7V5z" />
-              </svg>
-              Assets
-            </a>
-            <a href="{{ route('admin.request') }}"
-              class="{{ request()->routeIs('admin.request') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path d="M21 16l-6.003 6H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v13zm-2-1V4H5v16h9v-5h5z" />
-              </svg>
-              Requests Assets
-            </a>
-            <a href="{{ route('admin.borrow') }}"
-              class="{{ request()->routeIs('admin.borrow') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            <div class=" space-y-1 px-2 py-4">
+              <a href="{{ route('admin.dashboard') }}"
+                class="{{ request()->routeIs('admin.dashboard') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0H24V24H0z" />
+                  <path
+                    d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 2c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm3.833 3.337c.237-.166.559-.138.763.067.204.204.23.526.063.76-2.18 3.046-3.38 4.678-3.598 4.897-.586.585-1.536.585-2.122 0-.585-.586-.585-1.536 0-2.122.374-.373 2.005-1.574 4.894-3.602zM17.5 11c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1zm-11 0c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1zm2.318-3.596c.39.39.39 1.023 0 1.414-.39.39-1.024.39-1.414 0-.39-.39-.39-1.024 0-1.414.39-.39 1.023-.39 1.414 0zM12 5.5c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z" />
+                </svg>
+                Dashboard
+              </a>
+              <a href="{{ route('admin.asset') }}"
+                class="{{ request()->routeIs('admin.asset') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=" mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M22 20a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v16zm-11-5H4v4h7v-4zm9-4h-7v8h7v-8zm-9-6H4v8h7V5zm9 0h-7v4h7V5z" />
+                </svg>
+                Assets
+              </a>
+              <a href="{{ route('admin.ledger') }}"
+                class="{{ request()->routeIs('admin.ledger') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=" mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M20.005 2C21.107 2 22 2.898 22 3.99v16.02c0 1.099-.893 1.99-1.995 1.99H4v-4H2v-2h2v-3H2v-2h2V8H2V6h2V2h16.005zM8 4H6v16h2V4zm12 0H10v16h10V4z" />
+                </svg>
+                Ledger
+              </a>
+              <a href="{{ route('admin.request') }}"
+                class="{{ request()->routeIs('admin.request') || request()->routeIs('admin.manage-request') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path d="M21 16l-6.003 6H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v13zm-2-1V4H5v16h9v-5h5z" />
-              </svg>
-              Borrowed Assets
-            </a>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path d="M21 16l-6.003 6H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v13zm-2-1V4H5v16h9v-5h5z" />
+                </svg>
+                Requests Assets
+              </a>
+              <a href="{{ route('admin.borrow') }}"
+                class="{{ request()->routeIs('admin.borrow') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
 
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path d="M21 16l-6.003 6H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v13zm-2-1V4H5v16h9v-5h5z" />
+                </svg>
+                Borrowed Assets
+              </a>
+            </div>
+            <div class="mt-5 border-t px-2 space-y-1 py-4">
+              <a href="{{ route('admin.borrowers') }}"
+                class="{{ request()->routeIs('admin.borrowers') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path d="M5 20h14v2H5v-2zm7-2a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-2a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                </svg>
+                Borrowers
+              </a>
+              <a href="{{ route('admin.reports') }}"
+                class="{{ request()->routeIs('admin.reports') ? 'bg-white text-gray-700 fill-gray-700' : ' text-white fill-white' }}  hover:bg-white hover:text-gray-700 hover:fill-gray-700  group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="mr-3 flex-shrink-0 h-6 w-6">
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path
+                    d="M11 7h2v10h-2V7zm4 4h2v6h-2v-6zm-8 2h2v4H7v-4zm8-9H5v16h14V8h-4V4zM3 2.992C3 2.444 3.447 2 3.999 2H16l5 5v13.993A1 1 0 0 1 20.007 22H3.993A1 1 0 0 1 3 21.008V2.992z" />
+                </svg>
+                Reports
+              </a>
+            </div>
 
 
 
@@ -193,7 +225,7 @@
       </div>
     </div>
     <div class="flex flex-col md:pl-64">
-      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow" x-data="{ notifModal : false }">
+      <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow" x-data="{ notifModal: false }">
         <button type="button"
           class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
           <span class="sr-only">Open sidebar</span>
@@ -213,15 +245,19 @@
             <livewire:notification />
 
             <!-- Profile dropdown -->
-            <div class="relative ml-5" x-data="{ userdropdown: false }">
+            <div class="relative ml-4" x-data="{ userdropdown: false }">
               <div>
-                <button type="button" x-on:click="userdropdown = !userdropdown"
+                {{-- <button type="button" x-on:click="userdropdown = !userdropdown"
                   class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
                   <img class="h-9 w-9 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     alt="">
+                </button> --}}
+                <button class="focus:ring-2 rounded-full">
+                  <x-avatar md label="AD" x-on:click="userdropdown = !userdropdown"
+                    x-on:click.away="userdropdown = false" />
                 </button>
               </div>
               <div x-show="userdropdown" x-cloak x-transition:enter="transition ease-out duration-100"
@@ -237,17 +273,15 @@
                   <div class="group block w-full flex-shrink-0">
                     <div class="flex items-center  pb-2 border-b">
                       <div class="">
-                        <img class="inline-block h-9 w-9 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt="">
+                        <x-avatar md label="AD" />
                       </div>
                       <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-700">Tom Cook</p>
-                        <p class="text-xs font-medium text-gray-500">View profile</p>
+                        <p class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</p>
+                        <p class="text-xs font-medium text-gray-500">{{ auth()->user()->email }}</p>
                       </div>
                     </div>
                     <div class="mt-2 flex flex-col space-y-2 ">
-                      <a href=""
+                      <a href="{{ route('admin.profile') }}"
                         class="flex space-x-1 items-center text-sm hover:text-green-800 hover:fill-green-800 text-gray-700 fill-gray-700">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5">
                           <path fill="none" d="M0 0h24v24H0z" />

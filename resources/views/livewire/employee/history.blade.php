@@ -50,7 +50,6 @@
                   </div>
                 </div>
                 <div class="ml-5 flex-shrink-0">
-                  <!-- Heroicon name: mini/chevron-right -->
                   <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                     fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd"
