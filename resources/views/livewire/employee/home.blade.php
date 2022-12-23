@@ -126,32 +126,18 @@
         </div>
       </div>
       <div>
-        <x-datetime-picker 
-        label="Return Date" 
-        without-time placeholder="" 
-        :min="now()"
-        wire:model.defer="return_date" />
-        <div class="mt-5">
+        <x-datetime-picker label="Return Date" without-time placeholder="" :min="now()"
+          wire:model.defer="return_date" />
+        <div class="mt-3">
           <h1 class="text-gray-600 text-xs">Accountable Person</h1>
           <span class="text-gray-700 underline">{{ auth()->user()->employeeInformation->department->name }}</span>
         </div>
+
+        <div class="mt-2">
+          <x-textarea wire:model="purpose" placeholder="Your purpose" />
+        </div>
       </div>
     </div>
-    {{-- <div>
-    <x-input wire:model="firstName" label="Name" placeholder="User's first name" />
-    <div class="w-64">
-      <label for="email"
-        class="block text-sm font-medium text-gray-700 @error('return_date') text-red-600 @enderror">Expected return
-        date</label>
-      <div class="mt-1">
-        <input type="date" wire:model.defer="return_date"
-          class="block w-full rounded-md border-gray-300 @error('return_date') border-red-600 text-red-600 @enderror shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-      </div>
-      @error('return_date')
-        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-      @enderror
-    </div>
-   </div> --}}
     <div class=" mt-5 bg-green-100 rounded-lg p-3">
       <header>
         <h1 class="text-lg uppercase text-gray-700 font-bold ">Your Request Item</h1>
@@ -168,7 +154,8 @@
     <x-slot name="footer">
       <div class="flex justify-end items-center space-x-2">
         <x-button wire:click="$set('request_form', false)" label="Cancel" negative />
-        <x-button label="Confirm Request" wire:click="confirmDialog" right-icon="chevron-double-right" dark />
+        <x-button label="Confirm Request" wire:click="confirmDialog" spinner="confirmRequest"
+          right-icon="chevron-double-right" dark />
       </div>
     </x-slot>
   </x-modal.card>

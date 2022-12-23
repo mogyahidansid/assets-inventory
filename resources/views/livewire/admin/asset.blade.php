@@ -184,6 +184,7 @@
             <option value="3">Unfunctional</option>
             <option value="4">Slightly Damage</option>
             <option value="5">Damage</option>
+            <option value="5">Lost</option>
           </x-native-select>
           @if ($asset_remarks == 4 || $asset_remarks == 5)
             <div class="mt-2">

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('borrowed_date');
             $table->date('returned_date');
             $table->string('accountable_person');
+            $table->longText('purpose');
             $table->integer('status')->default(1);
             $table->longText('remarks')->nullable();
             $table->timestamps();

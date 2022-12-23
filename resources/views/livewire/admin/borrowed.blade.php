@@ -95,7 +95,7 @@
 
     </div>
 
-    <x-modal align="center" z-index="40" wire:model.defer="manage_borrow">
+    <x-modal align="center" z-index="z-50" wire:model.defer="manage_borrow">
       <x-card title=" TRANSACTION CODE: {{ $transaction_code }}">
         <div>
           <div class="">
@@ -106,10 +106,15 @@
             <h3 class="text-xs text-gray-500">Returned Date:</h3>
             <p class=" font-semibold text-red-600">{{ \Carbon\Carbon::parse($return)->format('F d, Y') }}</p>
           </div>
+          <div class="mt-2">
+            <h3 class="text-xs text-gray-500">Purpose of borrowing:</h3>
+            <p class=" font-semibold text-gray-600">{{ $purpose }}</p>
+          </div>
         </div>
         <div class="mt-5  border-t-2">
           @php
             $requestTransactions = \App\Models\RequestTransaction::whereIn('asset_id', $requests)->get();
+            // $requestTransactions = \App\Models\RequestTransaction::where('asset_id', $requests)->get();
           @endphp
 
           {{-- @dump($requestTransactions) --}}
@@ -119,10 +124,25 @@
                 <h1 class="font-bold text-gray-700">{{ $item->asset->name }}</h1>
                 <p class="text-xs text-gray-500">Serial Number: {{ $item->asset->serial_number }}</p>
                 <p class="text-xs text-gray-500">Last remarks: {{ $item->asset->remarks }}</p>
-                {{ $item->asset->id }}
               </div>
               <div class="w-72 border-l p-1">
-                <x-textarea wire:model="new_remarks.{{ $item->asset->id }}" label="New Remarks" placeholder="" />
+
+                <x-native-select label="Select New remarks" wire:model="new_remarks.{{ $item->asset->id }}">
+                  <option selected hidden value="">----------</option>
+                  <option value="1">Brand New</option>
+                  <option value="2">Functional</option>
+                  <option value="3">Unfunctional</option>
+                  <option value="4">Slightly Damage</option>
+                  <option value="5">Damage</option>
+                  <option value="6">Lost</option>
+                </x-native-select>
+                @if ($new_remarks == null)
+                @elseif ($new_remarks[$item->asset->id] == 5 || $new_remarks[$item->asset->id] == 4)
+                  <x-input label="Damage Remarks" wire:model="damage_remarks.{{ $item->asset->id }}" />
+                @endif
+                {{-- @if ($new_remarks . [$item->asset->id] == 5)
+                  <x-input label="Damage Remarks" wire:model="damage_remarks.{{ $item->asset->id }}" />
+                @endif --}}
               </div>
             </div>
           @endforeach

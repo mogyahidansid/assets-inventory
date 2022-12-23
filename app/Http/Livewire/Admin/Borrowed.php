@@ -7,14 +7,17 @@ use App\Models\Transaction;
 use App\Models\Asset;
 use App\Models\RequestTransaction;
 use WireUi\Traits\Actions;
+use App\Models\returnAsset;
 
 class Borrowed extends Component
 {
     use Actions;
     public $search;
     public $manage_borrow = false;
-    public $transaction_code, $return, $borrowed;
+    public $transaction_code, $return, $borrowed, $purpose;
+    public $borrower_id;
     public $new_remarks = [];
+    public $damage_remarks;
     public $transaction_id;
 
     public $requests = [];
@@ -43,13 +46,13 @@ class Borrowed extends Component
         } else {
             $this->manage_borrow = true;
             $this->transaction_id = $transaction_id;
+            $this->borrower_id = $request->user_id;
+            $this->purpose = $request->purpose;
             $this->transaction_code = $request->transaction_code;
             $this->return = $request->returned_date;
             $this->borrowed = $request->borrowed_date;
 
             $this->requests = $request->requests->pluck('id');
-
-            // dd($this->requests);
         }
     }
 
@@ -67,6 +70,13 @@ class Borrowed extends Component
         foreach ($assets as $asset) {
             $asset->update([
                 'remarks' => $this->new_remarks[$asset->id],
+                'reason' => $this->damage_remarks[$asset->id],
+            ]);
+
+            returnAsset::create([
+                'asset_id' => $asset->id,
+                'status' => $this->new_remarks[$asset->id],
+                'user_id' => $this->borrower_id,
             ]);
         }
         Transaction::where('id', $this->transaction_id)

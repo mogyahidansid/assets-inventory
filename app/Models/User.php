@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TemporaryRequest::class);
     }
+
+    public function returnAsset()
+    {
+        return $this->hasMany(ReturnAsset::class);
+    }
 }

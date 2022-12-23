@@ -49,9 +49,23 @@
                         <p class="mt-2 flex items-center text-sm text-gray-500">
                           <!-- Heroicon name: mini/check-circle -->
                           Status:
-                          <span
-                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs ml-2 font-medium text-red-800">Blacklisted</span>
-                          <x-button.circle 2xs class="ml-1" icon="pencil-alt" dark />
+                          @switch($employee->status)
+                            @case(1)
+                              <span
+                                class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs ml-2 font-medium text-green-800">Fast
+                                Returner</span>
+                            @break
+
+                            @case(2)
+                              <span
+                                class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs ml-2 font-medium text-red-800">Blacklisted</span>
+                            @break
+
+                            @default
+                          @endswitch
+                          <x-button.circle 2xs class="ml-1" icon="pencil-alt" dark
+                            wire:click="editBorrower({{ $employee->id }})"
+                            spinner="editBorrower({{ $employee->id }})" />
                         </p>
 
                       </div>
@@ -65,6 +79,23 @@
       </ul>
     </div>
 
+    <x-modal align="center" max-width="md" wire:model.defer="manage_modal">
+      <x-card title="Change Employee Status">
+        <p class="text-gray-600">
+          <x-native-select label="Select Status" wire:model="status">
+            <option selected hidden>Status</option>
+            <option value="1">Fast Returner</option>
+            <option value="2">BlackListed</option>
+          </x-native-select>
+        </p>
 
+        <x-slot name="footer">
+          <div class="flex justify-end gap-x-4">
+            <x-button flat label="Cancel" x-on:click="close" />
+            <x-button positive wire:click="updateStatus" label="Save It" />
+          </div>
+        </x-slot>
+      </x-card>
+    </x-modal>
 
   </div>
