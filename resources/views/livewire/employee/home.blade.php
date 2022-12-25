@@ -62,7 +62,7 @@
                 <ul role="list" class="-my-5 divide-y divide-gray-200">
                   @forelse ($category_get as $key => $item)
                     <li class="py-1">
-                      <div class="flex items-center d space-x-4">
+                      <div class="flex items-center space-x-4">
                         <div class="min-w-0 flex-1">
                           <p class="truncate text-sm font-bold uppercase text-green-700">{{ $item['name'] }}</p>
                           <div class="flex items-center gap-x-1">

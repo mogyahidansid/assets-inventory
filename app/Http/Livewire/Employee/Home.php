@@ -60,7 +60,6 @@ class Home extends Component
 
     public function confirmRequest()
     {
-        // dd($this->return_date);
         $code = 'RN' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
 
         $adminId = User::where('role', 1)->first();
@@ -70,10 +69,12 @@ class Home extends Component
             'user_id' => auth()->user()->id,
             'returned_date' => $this->return_date,
             'borrowed_date' => now(),
-            'purpose' => $this->purpose,
+            // 'purpose' => $this->purpose,
             'accountable_person' => auth()->user()->employeeInformation
                 ->department->name,
         ]);
+
+        // dd($transaction->id);
 
         foreach ($this->category_get as $key => $item) {
             RequestModel::create([
@@ -86,6 +87,7 @@ class Home extends Component
         // Notifications
         $notifToEmployee = [
             'employeeId' => auth()->user()->id,
+            'transactId' => $transaction->id,
             'message' => auth()->user()->name . ' is requesting ',
         ];
 
