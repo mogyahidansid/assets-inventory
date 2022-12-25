@@ -23,30 +23,32 @@
 
     <div class="mt-1 divide-y">
       @forelse (auth()->user()->unreadNotifications as $notification)
-        <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
-          <div class="flex items-start space-x-2">
-            @php
+        <a href="{{ route('admin.manage-request', ['id' => $notification->data['transactId']]) }}">
+          <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
+            <div class="flex items-start space-x-2">
+              @php
               $user = App\Models\User::where('id', $notification->data['employeeId'])->first()->employeeInformation;
-            @endphp
-
-            @if (auth()->user()->role == 1)
+              @endphp
+          
+              @if (auth()->user()->role == 1)
               <x-avatar md label="{{ $user->firstname[0] }} {{ $user->lastname[0] }}" />
-            @else
+              @else
               <div class="bg-cgreen text-white p-1.5 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                   <path class="fill-current"
                     d="M2 9h3v12H2a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm5.293-1.293l6.4-6.4a.5.5 0 0 1 .654-.047l.853.64a1.5 1.5 0 0 1 .553 1.57L14.6 8H21a2 2 0 0 1 2 2v2.104a2 2 0 0 1-.15.762l-3.095 7.515a1 1 0 0 1-.925.619H8a1 1 0 0 1-1-1V8.414a1 1 0 0 1 .293-.707z" />
                 </svg>
               </div>
-            @endif
-            <div class="font-normal leading-5">
-              <h1>{{ $notification->data['message'] }} assets.</h1>
-              <p class="text-gray-400 text-sm">
-                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $notification->created_at)->diffForHumans() }}
-              </p>
+              @endif
+              <div class="font-normal leading-5">
+                <h1>{{ $notification->data['message'] }} assets.</h1>
+                <p class="text-gray-400 text-sm">
+                  {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $notification->created_at)->diffForHumans() }}
+                </p>
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
+        </a>
       @empty
         <div class="py-5 text-center">
           <span class="text-gray-500">No Notification yet</span>
