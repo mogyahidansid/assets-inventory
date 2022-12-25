@@ -86,8 +86,8 @@
             </a>
           </li>
           @empty
-            <div class="mt-10">
-              <h1 class="text-center text-gray-500">No transaction found</h1>
+            <div class=" p-3 text-center">
+              <span class="text-gray-500">No Results found.</span>
             </div>
           @endforelse
         </ul>
