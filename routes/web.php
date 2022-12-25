@@ -39,7 +39,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-// Admin Routes
 
 Route::prefix('/admin')
     ->middleware([
@@ -49,33 +48,16 @@ Route::prefix('/admin')
         'admin',
     ])
     ->group(function () {
-        Route::get('/dashboard', fn() => view('admin.dashboard'))->name(
-            'admin.dashboard'
-        );
-        Route::get('/assets', fn() => view('admin.asset'))->name('admin.asset');
-        Route::get('/request-assets', fn() => view('admin.request'))->name(
-            'admin.request'
-        );
-        Route::get('/borrowed-assets', fn() => view('admin.borrow'))->name(
-            'admin.borrow'
-        );
-        Route::get(
-            '/request-assets/{id}',
-            fn() => view('admin.manage-request')
-        )->name('admin.manage-request');
+        Route::get('/dashboard', fn () => view('admin.dashboard'))->name('admin.dashboard');
+        Route::get('/assets', fn () => view('admin.asset'))->name('admin.asset');
+        Route::get('/request-assets', fn () => view('admin.request'))->name('admin.request');
+        Route::get('/borrowed-assets', fn () => view('admin.borrow'))->name('admin.borrow');
+        Route::get('/request-assets/{id}', fn () => view('admin.manage-request'))->name('admin.manage-request');
 
-        Route::get('/profile', fn() => view('admin.profile'))->name(
-            'admin.profile'
-        );
-        Route::get('/borrowers', fn() => view('admin.borrowers'))->name(
-            'admin.borrowers'
-        );
-        Route::get('/reports', fn() => view('admin.reports'))->name(
-            'admin.reports'
-        );
-        Route::get('/ledger', fn() => view('admin.ledger'))->name(
-            'admin.ledger'
-        );
+        Route::get('/profile', fn () => view('admin.profile'))->name('admin.profile');
+        Route::get('/borrowers', fn () => view('admin.borrowers'))->name('admin.borrowers');
+        Route::get('/reports', fn () => view('admin.reports'))->name('admin.reports');
+        Route::get('/ledger', fn () => view('admin.ledger'))->name('admin.ledger');
     });
 
 // Employee Routes
@@ -88,18 +70,18 @@ Route::prefix('/employee')
         'employee',
     ])
     ->group(function () {
-        Route::get('/dashboard', fn() => view('employee.dashboard'))->name(
+        Route::get('/dashboard', fn () => view('employee.dashboard'))->name(
             'employee.dashboard'
         );
-        Route::get('/requests', fn() => view('employee.request'))->name(
+        Route::get('/requests', fn () => view('employee.request'))->name(
             'employee.request'
         );
         Route::get(
             '/transaction-history',
-            fn() => view('employee.history')
+            fn () => view('employee.history')
         )->name('employee.history');
 
-        Route::get('/profile', fn() => view('employee.profile'))->name(
+        Route::get('/profile', fn () => view('employee.profile'))->name(
             'employee.profile'
         );
     });

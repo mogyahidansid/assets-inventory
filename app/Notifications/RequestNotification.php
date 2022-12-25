@@ -59,6 +59,7 @@ class RequestNotification extends Notification
     {
         return [
             'employeeId' => $this->requestData['employeeId'],
+            'transactId' => $this->requestData['transactId'],
             'message' => $this->requestData['message'],
             // 'action' => $this->requestData['action']
         ];
