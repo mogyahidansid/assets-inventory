@@ -58,8 +58,18 @@ class User extends Authenticatable
         return $this->hasOne(EmployeeInformation::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
     public function temporary_requests()
     {
         return $this->hasMany(TemporaryRequest::class);
+    }
+
+    public function returnAsset()
+    {
+        return $this->hasMany(ReturnAsset::class);
     }
 }

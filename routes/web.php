@@ -63,6 +63,19 @@ Route::prefix('/admin')
             '/request-assets/{id}',
             fn() => view('admin.manage-request')
         )->name('admin.manage-request');
+
+        Route::get('/profile', fn() => view('admin.profile'))->name(
+            'admin.profile'
+        );
+        Route::get('/borrowers', fn() => view('admin.borrowers'))->name(
+            'admin.borrowers'
+        );
+        Route::get('/reports', fn() => view('admin.reports'))->name(
+            'admin.reports'
+        );
+        Route::get('/ledger', fn() => view('admin.ledger'))->name(
+            'admin.ledger'
+        );
     });
 
 // Employee Routes
@@ -85,4 +98,8 @@ Route::prefix('/employee')
             '/transaction-history',
             fn() => view('employee.history')
         )->name('employee.history');
+
+        Route::get('/profile', fn() => view('employee.profile'))->name(
+            'employee.profile'
+        );
     });

@@ -14,12 +14,19 @@ class Asset extends Component
     public $filter_id;
     public $manage_category = false;
     public $category_name;
+    public $option_modal = false;
+    public $asset_id;
+    public $view_modal = false;
+    public $edit_modal = false;
+    public $delete_modal = false;
 
     public $add_modal = false;
     public $asset_name,
+        $asset_inventory_code,
         $asset_category,
         $asset_description,
         $asset_remarks,
+        $remarks_reason,
         $asset_price,
         $isBundle = false,
         $asset_quantity,
@@ -120,6 +127,7 @@ class Asset extends Component
                 'remarks' => $this->asset_remarks,
                 'price' => $this->asset_price,
                 'serial_number' => $this->asset_serial_number,
+                'reason' => $this->remarks_reason,
             ]);
 
             Inventory::create([
@@ -135,6 +143,7 @@ class Asset extends Component
                 'asset_description',
                 'asset_quantity',
                 'asset_remarks',
+                'remarks_reason',
                 'asset_price',
                 'asset_serial_number',
             ]);
@@ -178,5 +187,82 @@ class Asset extends Component
 
             $this->add_modal = false;
         }
+    }
+
+    public function openOption($asset_id)
+    {
+        $this->asset_id = $asset_id;
+        $this->option_modal = true;
+    }
+
+    public function viewAsset()
+    {
+        $this->option_modal = false;
+        $this->view_modal = true;
+        $asset = Inventory::where('asset_id', $this->asset_id)->first();
+        $this->asset_inventory_code = $asset->inventory_code;
+        $this->asset_serial_number = $asset->assets->first()->serial_number;
+        $this->asset_name = $asset->assets->first()->name;
+        $this->asset_category = $asset->assets->first()->category->name;
+        $this->asset_description = $asset->assets->first()->description;
+        $this->asset_remarks = $asset->assets->first()->remarks;
+        $this->asset_price = $asset->assets->first()->price;
+        if ($asset->remarks == 4 || $asset->remarks == 5) {
+            $this->remarks_reason = $asset->assets->first()->reason;
+        }
+    }
+
+    public function editAsset()
+    {
+        $this->option_modal = false;
+        $this->edit_modal = true;
+
+        $asset = Inventory::where('asset_id', $this->asset_id)->first();
+        $this->asset_inventory_code = $asset->inventory_code;
+        $this->asset_serial_number = $asset->assets->first()->serial_number;
+        $this->asset_name = $asset->assets->first()->name;
+        $this->asset_category = $asset->assets->first()->category_id;
+        $this->asset_description = $asset->assets->first()->description;
+        $this->asset_remarks = $asset->assets->first()->remarks;
+        $this->asset_price = $asset->assets->first()->price;
+        if ($asset->remarks == 4 || $asset->remarks == 5) {
+            $this->remarks_reason = $asset->assets->first()->reason;
+        }
+    }
+
+    public function updateAsset()
+    {
+        $this->validate([
+            'asset_name' => 'required',
+            'asset_category' => 'required',
+            'asset_description' => 'required',
+            'asset_remarks' => 'required',
+            'asset_price' => 'required',
+            'asset_serial_number' => 'required',
+        ]);
+        $asset = assetModel::where('id', '=', $this->asset_id)->first();
+        $asset->update([
+            'name' => $this->asset_name,
+            'category_id' => $this->asset_category,
+            'description' => $this->asset_description,
+            'remarks' => $this->asset_remarks,
+            'price' => $this->asset_price,
+            'serial_number' => $this->asset_serial_number,
+            'reason' => $this->remarks_reason,
+        ]);
+        $this->reset([
+            'asset_name',
+            'asset_category',
+            'asset_description',
+            'asset_remarks',
+            'asset_price',
+            'asset_serial_number',
+            'remarks_reason',
+        ]);
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Asset was updated'
+        );
+        $this->edit_modal = false;
     }
 }

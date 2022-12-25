@@ -24,4 +24,9 @@ class Asset extends Model
     {
         return $this->hasMany(RequestTransaction::class);
     }
+
+    public function returnAssets()
+    {
+        return $this->hasMany(ReturnAsset::class);
+    }
 }

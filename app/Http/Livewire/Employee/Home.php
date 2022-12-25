@@ -19,6 +19,8 @@ class Home extends Component
     public $request_form = false;
     public $return_date;
 
+    public $purpose;
+
     public $reqQty;
 
     public function render()
@@ -68,6 +70,7 @@ class Home extends Component
             'user_id' => auth()->user()->id,
             'returned_date' => $this->return_date,
             'borrowed_date' => now(),
+            'purpose' => $this->purpose,
             'accountable_person' => auth()->user()->employeeInformation
                 ->department->name,
         ]);
@@ -102,6 +105,7 @@ class Home extends Component
     {
         $this->validate([
             'return_date' => 'required',
+            'purpose' => 'required',
         ]);
         $this->dialog()->confirm([
             'title' => 'Are you Sure?',

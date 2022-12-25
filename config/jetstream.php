@@ -4,7 +4,6 @@ use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Middleware\AuthenticateSession;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Jetstream Stack
@@ -59,7 +58,7 @@ return [
 
     'features' => [
         // Features::termsAndPrivacyPolicy(),
-        // Features::profilePhotos(),
+        Features::profilePhotos(),
         // Features::api(),
         // Features::teams(['invitations' => true]),
         Features::accountDeletion(),
@@ -77,5 +76,4 @@ return [
     */
 
     'profile_photo_disk' => 'public',
-
 ];
