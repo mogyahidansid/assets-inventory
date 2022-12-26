@@ -69,7 +69,7 @@ class Home extends Component
             'user_id' => auth()->user()->id,
             'returned_date' => $this->return_date,
             'borrowed_date' => now(),
-            // 'purpose' => $this->purpose,
+            'purpose' => $this->purpose,
             'accountable_person' => auth()->user()->employeeInformation
                 ->department->name,
         ]);

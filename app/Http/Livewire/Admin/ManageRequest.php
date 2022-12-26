@@ -89,6 +89,12 @@ class ManageRequest extends Component
                     'asset_id' => $asset_id,
                     'user_id' => $this->requestor_id,
                 ]);
+
+                $asset = Asset::where('id', $asset_id)
+                    ->first()
+                    ->update([
+                        'status' => 2,
+                    ]);
             } else {
                 $this->dialog()->error(
                     $title = 'Error !!!',
@@ -104,46 +110,66 @@ class ManageRequest extends Component
         $user = Transaction::where('id', $this->request_id)->first();
 
         $requests = TemporaryRequest::where('user_id', $user->user_id)->get();
-        foreach ($requests as $request) {
-            RequestTransaction::create([
-                'request_id' => $request->request_id,
-                'asset_id' => $request->asset_id,
-            ]);
 
-            TemporaryRequest::where(
-                'category_id',
-                $request->category_id
-            )->delete();
+        if ($requests->count() == 0) {
+            $this->dialog()->error(
+                $title = 'Request',
+                $description = 'Please manage your request.'
+            );
+        } else {
+            foreach ($requests as $request) {
+                RequestTransaction::create([
+                    'request_id' => $request->request_id,
+                    'asset_id' => $request->asset_id,
+                ]);
+
+                TemporaryRequest::where(
+                    'category_id',
+                    $request->category_id
+                )->delete();
+            }
+            $employeeId = Transaction::where('id', $this->request_id)->first();
+            $employeeId->update(['status' => 2]);
+            $employeeId->save();
+
+            $userEmployee = User::where('id', $employeeId->user_id)->first();
+
+            if ($employeeId) {
+                // Notifications
+                $notifToEmployee = [
+                    'employeeId' => auth()->user()->id,
+                    'transactId' => $this->request_id,
+                    'message' => 'The admin approved your request ',
+                ];
+
+                event(
+                    new \App\Events\RequestNotificationEvent(
+                        $employeeId->user_id
+                    )
+                );
+                $userEmployee->notify(
+                    new RequestNotification($notifToEmployee)
+                );
+            }
+
+            $this->dialog()->success(
+                $title = 'Request',
+                $description = 'Request has been accepted'
+            );
+
+            return redirect()->route('admin.request');
         }
-        // ->update(['status' => 2])
-        $employeeId = Transaction::where('id', $this->request_id)->first();
-        $employeeId->update(['status' => 2]);
-        $employeeId->save();
-
-        $userEmployee = User::where('id', $employeeId->user_id)->first();
-
-        if ($employeeId) {
-            // Notifications
-            $notifToEmployee = [
-                'employeeId' => auth()->user()->id,
-                'message' => 'The admin approved your request ',
-            ];
-
-            event(new \App\Events\RequestNotificationEvent($employeeId->user_id));
-            $userEmployee->notify(new RequestNotification($notifToEmployee));
-        }
-
-        $this->dialog()->success(
-            $title = 'Request',
-            $description = 'Request has been accepted'
-        );
-
-        return redirect()->route('admin.request');
     }
 
     public function removeItem($request_id)
     {
         $item = TemporaryRequest::where('id', $request_id)->first();
+
+        $asset = Asset::where('id', $item->asset_id)
+            ->first()
+            ->update([
+                'status' => 2,
+            ]);
         $item->delete();
         $this->notification()->success(
             $title = 'Success',
@@ -153,17 +179,28 @@ class ManageRequest extends Component
 
     public function declineRequest()
     {
-        $transaction = Transaction::where('id', $this->request_id)->first();
-        $transaction->update([
-            'status' => 4,
-            'remarks' => $this->remarks,
-        ]);
+        $request = TemporaryRequest::count();
+        if ($request == 0) {
+            $transaction = Transaction::where('id', $this->request_id)->first();
+            $this->validate([
+                'remarks' => 'required',
+            ]);
+            $transaction->update([
+                'status' => 4,
+                'remarks' => $this->remarks,
+            ]);
 
-        $this->dialog()->success(
-            $title = 'Request',
-            $description = 'Request has been declined'
-        );
+            $this->dialog()->success(
+                $title = 'Request',
+                $description = 'Request has been declined'
+            );
 
-        return redirect()->route('admin.request');
+            return redirect()->route('admin.request');
+        } else {
+            $this->dialog()->error(
+                $title = 'Request',
+                $description = 'Remove your selected Asset to declined request'
+            );
+        }
     }
 }

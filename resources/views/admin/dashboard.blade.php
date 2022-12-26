@@ -27,7 +27,8 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Total Pending Requests</dt>
                         <dd>
-                          <div class="text-2xl font-medium text-gray-900">5</div>
+                          <div class="text-2xl font-medium text-gray-900">
+                            {{ App\Models\Transaction::where('status', 1)->count() }}</div>
                         </dd>
                       </dl>
                     </div>
@@ -58,7 +59,8 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Total Accepted Requests</dt>
                         <dd>
-                          <div class="text-2xl font-medium text-gray-900">5</div>
+                          <div class="text-2xl font-medium text-gray-900">
+                            {{ App\Models\Transaction::where('status', 2)->count() }}</div>
                         </dd>
                       </dl>
                     </div>
@@ -86,7 +88,8 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Total Declined Requests</dt>
                         <dd>
-                          <div class="text-2xl font-medium text-gray-900">5</div>
+                          <div class="text-2xl font-medium text-gray-900">
+                            {{ App\Models\Transaction::where('status', 3)->count() }}</div>
                         </dd>
                       </dl>
                     </div>
@@ -115,7 +118,8 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Total Returned Requests</dt>
                         <dd>
-                          <div class="text-2xl font-medium text-gray-900">5</div>
+                          <div class="text-2xl font-medium text-gray-900">
+                            {{ App\Models\Transaction::where('status', 4)->count() }}</div>
                         </dd>
                       </dl>
                     </div>
