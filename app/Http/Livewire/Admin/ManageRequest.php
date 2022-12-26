@@ -126,7 +126,8 @@ class ManageRequest extends Component
             // Notifications
             $notifToEmployee = [
                 'employeeId' => auth()->user()->id,
-                'message' => 'The admin approved your request ',
+                'transactId' => $employeeId->id,
+                'message' => 'The admin approved your request',
             ];
 
             event(new \App\Events\RequestNotificationEvent($employeeId->user_id));
@@ -158,6 +159,20 @@ class ManageRequest extends Component
             'status' => 4,
             'remarks' => $this->remarks,
         ]);
+
+        $userEmployee = User::where('id', $transaction->user_id)->first();
+        if ($transaction) {
+            // Notifications
+            $notifToEmployee = [
+                'employeeId' => auth()->user()->id,
+                'transactId' => $transaction->id,
+                'message' => 'The admin declined your request',
+            ];
+
+            event(new \App\Events\RequestNotificationEvent($transaction->user_id));
+            $userEmployee->notify(new RequestNotification($notifToEmployee));
+        }
+
 
         $this->dialog()->success(
             $title = 'Request',
