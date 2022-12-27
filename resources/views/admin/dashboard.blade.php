@@ -118,7 +118,7 @@
                       <dl>
                         <dt class="truncate text-sm font-medium text-gray-500">Total Returned Requests</dt>
                         <dd>
-                          <div class="text-2xl font-medium text-gray-900">
+                          <div class="text-2xl font-medium text-gray-900 s">
                             {{ App\Models\Transaction::where('status', 4)->count() }}</div>
                         </dd>
                       </dl>
