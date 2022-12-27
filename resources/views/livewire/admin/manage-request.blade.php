@@ -129,7 +129,7 @@
     </x-card>
   </x-modal>
 
-  <x-modal align="center" wire:model.defer="decline_modal">
+  <x-modal align="center" z-index="z-40" wire:model.defer="decline_modal">
     <x-card>
       <div class="flex space-x-2 px-4">
         <div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

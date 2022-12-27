@@ -103,6 +103,7 @@ class Asset extends Component
             'asset_description' => 'required',
             'asset_remarks' => 'required',
             'asset_serial_number' => 'required|unique:assets,serial_number',
+            'asset_category' => 'required',
         ]);
 
         $query = AssetModel::where(

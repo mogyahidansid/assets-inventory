@@ -65,7 +65,12 @@
 
                         @case(4)
                           <span
-                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Returned</span>
+                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Declined</span>
+                        @break
+
+                        @case(4)
+                          <span
+                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Returned</span>
                         @break
 
                         @default
@@ -86,8 +91,8 @@
             </a>
           </li>
           @empty
-            <div class="mt-10">
-              <h1 class="text-center text-gray-500">No transaction found</h1>
+            <div class=" p-3 text-center">
+              <span class="text-gray-500">No Results found.</span>
             </div>
           @endforelse
         </ul>
