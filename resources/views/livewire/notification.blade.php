@@ -24,7 +24,7 @@
     <div class="mt-1 divide-y">
       @forelse (auth()->user()->unreadNotifications as $notification)
         @if (auth()->user()->role == 1)
-          <a href="{{ route('admin.manage-request', ['id' => $notification->data['transactId']]) }}">
+          <a wire:click="markAsRead('{{ $notification->id }}', '{{ $notification->data['transactId'] }}')">
             <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
               <div class="flex items-start space-x-2">
                 @php
@@ -42,7 +42,7 @@
             </button>
           </a>
         @else
-          <a href="{{ route('employee.request') }}">
+          <a wire:click="markAsRead('{{ $notification->id }}', '{{ $notification->data['transactId'] }}')">
             <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
               <div class="flex items-start space-x-2">
                 @php

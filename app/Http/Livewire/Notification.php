@@ -13,6 +13,16 @@ class Notification extends Component
         $this->userId = auth()->user()->id;
     }
 
+    public function markAsRead($id, $notifId)
+    {
+        $notification = auth()->user()->notifications->where('id', $id)->first();
+        $notification->markAsRead();
+
+        if (auth()->user()->role == 1) {
+            return redirect()->route('admin.manage-request', ['id' => $notifId]);
+        }
+    }
+
     public function getListeners()
     {
         return [
