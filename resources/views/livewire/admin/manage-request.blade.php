@@ -143,7 +143,7 @@
           <p class="font-xs text-gray-400">Please input your reason to decline the request.</p>
 
           <div class="mt-4">
-            <x-textarea label="Your Remarks:" wire:model.defer="remarks" placeholder="write your remarks" />
+            <x-textarea label="Your Remark:" wire:model.defer="remarks" placeholder="write your remarks" />
           </div>
         </div>
       </div>

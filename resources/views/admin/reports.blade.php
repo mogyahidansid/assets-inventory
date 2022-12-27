@@ -12,6 +12,7 @@
       <!-- /End replace -->
     </div>
   </div>
+  
   <script>
     function printOut(data) {
       var mywindow = window.open('', '', 'height=1000,width=1000');
