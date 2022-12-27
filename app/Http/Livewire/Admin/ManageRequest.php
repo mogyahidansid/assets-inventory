@@ -159,6 +159,33 @@ class ManageRequest extends Component
 
             return redirect()->route('admin.request');
         }
+        // ->update(['status' => 2])
+        $employeeId = Transaction::where('id', $this->request_id)->first();
+        $employeeId->update(['status' => 2]);
+        $employeeId->save();
+
+        $userEmployee = User::where('id', $employeeId->user_id)->first();
+
+        if ($employeeId) {
+            // Notifications
+            $notifToEmployee = [
+                'employeeId' => auth()->user()->id,
+                'transactId' => $employeeId->id,
+                'message' => 'The admin approved your request',
+            ];
+
+            event(
+                new \App\Events\RequestNotificationEvent($employeeId->user_id)
+            );
+            $userEmployee->notify(new RequestNotification($notifToEmployee));
+        }
+
+        $this->dialog()->success(
+            $title = 'Request',
+            $description = 'Request has been accepted'
+        );
+
+        return redirect()->route('admin.request');
     }
 
     public function removeItem($request_id)
@@ -189,6 +216,25 @@ class ManageRequest extends Component
                 'status' => 4,
                 'remarks' => $this->remarks,
             ]);
+
+            $userEmployee = User::where('id', $transaction->user_id)->first();
+            if ($transaction) {
+                // Notifications
+                $notifToEmployee = [
+                    'employeeId' => auth()->user()->id,
+                    'transactId' => $transaction->id,
+                    'message' => 'The admin declined your request',
+                ];
+
+                event(
+                    new \App\Events\RequestNotificationEvent(
+                        $transaction->user_id
+                    )
+                );
+                $userEmployee->notify(
+                    new RequestNotification($notifToEmployee)
+                );
+            }
 
             $this->dialog()->success(
                 $title = 'Request',
