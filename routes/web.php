@@ -70,18 +70,12 @@ Route::prefix('/employee')
         'employee',
     ])
     ->group(function () {
-        Route::get('/dashboard', fn () => view('employee.dashboard'))->name(
-            'employee.dashboard'
-        );
-        Route::get('/requests', fn () => view('employee.request'))->name(
-            'employee.request'
-        );
+        Route::get('/dashboard', fn () => view('employee.dashboard'))->name('employee.dashboard');
+        Route::get('/requests', fn () => view('employee.request'))->name('employee.request');
         Route::get(
             '/transaction-history',
             fn () => view('employee.history')
         )->name('employee.history');
 
-        Route::get('/profile', fn () => view('employee.profile'))->name(
-            'employee.profile'
-        );
+        Route::get('/profile', fn () => view('employee.profile'))->name('employee.profile');
     });
