@@ -199,7 +199,7 @@
       </div>
 
       <x-slot name="footer">
-        <div class="flex justify-end gap-x-4">
+        <div class="flex justify-end gap-x-4 s">
           <x-button flat label="Cancel" x-on:click="close" />
           <x-button icon="printer" positive @click="printOut($refs.printContainer.outerHTML);"
             label="Print Report" />
