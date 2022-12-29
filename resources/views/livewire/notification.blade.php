@@ -19,13 +19,24 @@
         <h1>Notifications</h1>
       </div>
       <button class="text-sm text-cgreen/80 hover:text-cgreen underline">Mark all as read</button>
-    </section>
+    </section> 
 
     <div class="mt-1 divide-y">
-      @forelse (auth()->user()->unreadNotifications as $notification)
+      {{-- @forelse (auth()->user()->unreadNotifications as $notification) --}}
+      @forelse (auth()->user()->notifications as $notification)
         @if (auth()->user()->role == 1)
           <a wire:click="markAsRead('{{ $notification->id }}', '{{ $notification->data['transactId'] }}')">
-            <button class="bg-gray-100 w-full py-2.5 px-3 text-left">
+            @php
+              foreach (auth()->user()->notifications as $notif) {
+                if ($notif->read_at != null) {
+                  $color = 'bg-white';
+                }
+                else{
+                  $color = 'bg-gray-100';
+                }
+              }
+            @endphp
+            <button class="bg-{{ $color }} w-full py-2.5 px-3 text-left">
               <div class="flex items-start space-x-2">
                 @php
                 $user = App\Models\User::where('id', $notification->data['employeeId'])->first()->employeeInformation;
