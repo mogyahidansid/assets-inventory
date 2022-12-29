@@ -8,7 +8,9 @@ use Carbon\Carbon;
 use App\Models\RequestTransaction;
 use App\Models\EmployeeInformation;
 use App\Models\ReturnAsset;
-
+use App\Models\Transaction;
+use App\Models\UnreturnedAsset;
+use App\Models\BlackListed;
 class Report extends Component
 {
     public $report1_modal = false;
@@ -37,21 +39,35 @@ class Report extends Component
                 '>=',
                 Carbon::now()->subDays(5)
             )->get(),
-            'borrowed' => Asset::withCount('requestTransactions')
-                ->having('request_transactions_count', 3)
+            'borrowed' => Asset::withCount('borrowedAssets')
+                ->having('borrowed_assets_count', 5)
                 ->get(),
             'leasts' => Asset::withCount('requestTransactions')
                 ->having('request_transactions_count', '<', 3)
                 ->get(),
-            'unreturned' => Asset::where('status', 3)->get(),
+            'unreturned' => UnreturnedAsset::all(),
             'recently' => Asset::where(
                 'created_at',
                 '>=',
                 Carbon::now()->subDays(5)
             )->get(),
-            'losts' => Asset::where('remarks', 6)->get(),
-
-            'employees' => EmployeeInformation::where('status', 2)->get(),
+            'losts' => ReturnAsset::where('status', 6)
+                ->when($this->start_date, function ($query) {
+                    $query->where('created_at', '>=', $this->start_date);
+                })
+                ->when($this->end_date, function ($query) {
+                    $query->where('created_at', '<=', $this->end_date);
+                })
+                ->get(),
+            'employees' => BlackListed::when($this->start_date, function (
+                $query
+            ) {
+                $query->where('created_at', '>=', $this->start_date);
+            })
+                ->when($this->end_date, function ($query) {
+                    $query->where('created_at', '<=', $this->end_date);
+                })
+                ->get(),
         ]);
     }
 
@@ -74,6 +90,44 @@ class Report extends Component
                 break;
 
             case 5:
+                $transaction = Transaction::where('status', 2)
+                    ->where('returned_date', '<=', now())
+                    ->get();
+
+                if ($transaction) {
+                    if (
+                        UnreturnedAsset::where(
+                            'user_id',
+                            $transaction->first()->user_id
+                        )
+                            ->where(
+                                'borrowed_date',
+                                $transaction->first()->borrowed_date
+                            )
+                            ->where(
+                                'returned_date',
+                                $transaction->first()->returned_date
+                            )
+                            ->exists()
+                    ) {
+                    } else {
+                        foreach (
+                            $transaction->first()->requests->first()
+                                ->requestTransactions
+                            as $asset
+                        ) {
+                            UnreturnedAsset::create([
+                                'asset_id' => $asset->asset_id,
+                                'user_id' => $transaction->first()->user_id,
+                                'borrowed_date' => $transaction->first()
+                                    ->borrowed_date,
+                                'returned_date' => $transaction->first()
+                                    ->returned_date,
+                            ]);
+                        }
+                    }
+                }
+
                 $this->report5_modal = true;
                 break;
 

@@ -1,14 +1,58 @@
 <div>
   <div class="header">
     <div class="flex justify-between ">
-      <div class=" w-96">
+      <div class=" w-[26rem]">
         <div class="">
           <div class="min-w-0 flex-1">
             <h2 class="text-xl font-bold leading-7 text-gray-700 sm:truncate sm:text-xl sm:tracking-tight">REQUEST FORM
             </h2>
           </div>
+          @if ($transaction_count == 2)
+            <div class="rounded-md bg-red-50 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <!-- Heroicon name: mini/x-circle -->
+                  <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm  text-red-800">You have {{ $transaction_count }} unreturned assets.
+                    Please make sure to return all your requested assets or you account will blacklisted.</h3>
+                </div>
+              </div>
+            </div>
+          @elseif($transaction_count >= 3)
+            <div class="rounded-md bg-red-50 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <!-- Heroicon name: mini/x-circle -->
+                  <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-red-800">You have {{ $transaction_count }} unreturned assets.
+                  </h3>
+                  <div class="mt-2 text-sm text-red-700">
+                    <ul role="list" class="list-disc space-y-1 pl-5">
+                      <li>Your account have been placed on the blacklist and are not permitted to request any assets.
+                        Please contact the administrator for more information.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endif
           <div>
-            <div class="mt-8 border-t py-4 flow-root">
+            <div class="mt-5 border-t py-4 flow-root">
+
               <ul role="list" class="-my-5 divide-y divide-gray-200">
                 @forelse ($categories as $key => $category)
                   <li class="py-3">

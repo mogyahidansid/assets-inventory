@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ReturnAsset::class);
     }
+
+    public function blackListed()
+    {
+        return $this->hasOne(BlackListed::class);
+    }
 }

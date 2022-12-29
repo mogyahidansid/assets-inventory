@@ -12,6 +12,7 @@ use App\Models\TemporaryRequest;
 use App\Models\RequestTransaction;
 use App\Models\User;
 use App\Notifications\RequestNotification;
+use App\Models\BorrowedAsset;
 
 class ManageRequest extends Component
 {
@@ -109,6 +110,7 @@ class ManageRequest extends Component
     {
         $user = Transaction::where('id', $this->request_id)->first();
 
+        // dd($user->borrowed_date);
         $requests = TemporaryRequest::where('user_id', $user->user_id)->get();
 
         if ($requests->count() == 0) {
@@ -121,6 +123,12 @@ class ManageRequest extends Component
                 RequestTransaction::create([
                     'request_id' => $request->request_id,
                     'asset_id' => $request->asset_id,
+                ]);
+                BorrowedAsset::create([
+                    'asset_id' => $request->asset_id,
+                    'user_id' => $user->user_id,
+                    'borrowed_date' => $user->borrowed_date,
+                    'returned_date' => $user->returned_date,
                 ]);
 
                 TemporaryRequest::where(
@@ -159,33 +167,6 @@ class ManageRequest extends Component
 
             return redirect()->route('admin.request');
         }
-        // ->update(['status' => 2])
-        $employeeId = Transaction::where('id', $this->request_id)->first();
-        $employeeId->update(['status' => 2]);
-        $employeeId->save();
-
-        $userEmployee = User::where('id', $employeeId->user_id)->first();
-
-        if ($employeeId) {
-            // Notifications
-            $notifToEmployee = [
-                'employeeId' => auth()->user()->id,
-                'transactId' => $employeeId->id,
-                'message' => 'The admin approved your request',
-            ];
-
-            event(
-                new \App\Events\RequestNotificationEvent($employeeId->user_id)
-            );
-            $userEmployee->notify(new RequestNotification($notifToEmployee));
-        }
-
-        $this->dialog()->success(
-            $title = 'Request',
-            $description = 'Request has been accepted'
-        );
-
-        return redirect()->route('admin.request');
     }
 
     public function removeItem($request_id)

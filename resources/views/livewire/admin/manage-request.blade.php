@@ -62,18 +62,16 @@
                           ->get();
                       
                     @endphp
-                    <ul>
-
-
+                    <div class="grid grid-cols-4">
                       @forelse ($gets as $item)
-                        <li>
+                        <div>
                           <span class="bg-gray-500 p-0.5 s text-white rounded-lg px-2">{{ $item->asset->name }}
                             <x-button.circle negative xs icon="trash" wire:click="removeItem({{ $item->id }})" />
                           </span>
-                        </li>
+                        </div>
                       @empty
                       @endforelse
-                    </ul>
+                    </div>
                   </div>
                 </li>
               @endforeach

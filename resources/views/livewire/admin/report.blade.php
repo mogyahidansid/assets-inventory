@@ -97,7 +97,7 @@
           </div>
         </a>
       </li>
-      <li>
+      {{-- <li>
         <a href="#" class="block hover:bg-gray-50">
           <div class="px-4 py-2 sm:px-6">
             <div class="flex items-center justify-between">
@@ -115,7 +115,7 @@
 
           </div>
         </a>
-      </li>
+      </li> --}}
       <li>
         <a href="#" class="block hover:bg-gray-50">
           <div class="px-4 py-2 sm:px-6">
@@ -283,14 +283,14 @@
           <tbody class="">
             @foreach ($borrowed as $item)
               <tr>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->serial_number }}</td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->name }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->serial_number }}</td>
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->name }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->description }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->description }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->price, 2) }}
+                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->asset->price, 2) }}
                 </td>
-                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->category->name }}
+                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->asset->category->name }}
                 </td>
               </tr>
             @endforeach
@@ -383,14 +383,14 @@
           <tbody class="">
             @foreach ($unreturned as $item)
               <tr>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->serial_number }}</td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->name }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->serial_number }}</td>
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->name }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->description }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->description }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->price, 2) }}
+                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->asset->price, 2) }}
                 </td>
-                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->category->name }}
+                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->asset->category->name }}
                 </td>
               </tr>
             @endforeach
@@ -460,6 +460,11 @@
 
   <x-modal max-width="5xl" wire:model.defer="report7_modal">
     <x-card title="">
+      <div class="bg-gray-100 flex justify-end space-x-2 p-2 rounded-lg items-center ">
+        <x-datetime-picker placeholder="Start Date" without-time wire:model="start_date" />
+        <span>-</span>
+        <x-datetime-picker placeholder="End Date" without-time wire:model="end_date" />
+      </div>
       <div class="p-2 " x-ref="printContainer">
         <div class="flex space-x-1 items-center">
           <img src="{{ asset('assets/IMAnLogo.png') }}" class="h-10" alt="">
@@ -510,6 +515,11 @@
 
   <x-modal max-width="5xl" wire:model.defer="report8_modal">
     <x-card title="">
+      <div class="bg-gray-100 flex justify-end space-x-2 p-2 rounded-lg items-center ">
+        <x-datetime-picker placeholder="Start Date" without-time wire:model="start_date" />
+        <span>-</span>
+        <x-datetime-picker placeholder="End Date" without-time wire:model="end_date" />
+      </div>
       <div class="p-2 " x-ref="printContainer">
         <div class="flex space-x-1 items-center">
           <img src="{{ asset('assets/IMAnLogo.png') }}" class="h-10" alt="">
@@ -525,14 +535,18 @@
               <th class="border text-left px-2 text-sm font-medium text-gray-500 py-2">FULLNAME</th>
               <th class="border text-left px-2 text-sm font-medium text-gray-500 py-2">DEPARTMENT
               </th>
+              <th class="border text-left px-2 text-sm font-medium text-gray-500 py-2">DATE
+              </th>
 
             </tr>
           </thead>
           <tbody class="">
             @foreach ($employees as $item)
               <tr>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->fullname }}</td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->department->name }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->user->employeeInformation->fullname }}</td>
+                <td class="border text-gray-600  px-3 py-1">{{ $item->user->employeeInformation->department->name }}
+                </td>
+                <td class="border text-gray-600  px-3 py-1">{{ $item->created_at->format('M d, Y') }}
                 </td>
 
               </tr>

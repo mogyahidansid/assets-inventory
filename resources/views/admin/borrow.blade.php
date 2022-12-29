@@ -7,6 +7,7 @@
       <!-- Replace with your content -->
       <div class="py-4">
         <livewire:admin.borrowed />
+        {{-- <livewire:admin.borrowed-asset /> --}}
       </div>
       <!-- /End replace -->
     </div>

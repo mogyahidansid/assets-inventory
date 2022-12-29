@@ -1,5 +1,4 @@
-<div>
-
+<div x-data="{ 'manage': @entangle('manage_borrow') }">
   <div class="mt-10">
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
@@ -13,7 +12,6 @@
             class="outline:none  h-8 focus:ring-0 flex-1 border-0 focus:border-0" placeholder="Search transaction...">
         </div>
       </div>
-
     </div>
     <div class="overflow-hidden mt-5 bg-white shadow sm:rounded-md">
       <ul role="list" class="divide-y divide-gray-200">
@@ -105,7 +103,7 @@
 
     </div>
 
-    <x-modal align="center" z-index="z-50" wire:model.defer="manage_borrow">
+    {{-- <x-modal align="center" z-index="z-50" wire:model.defer="manage_borrow">
       <x-card title=" TRANSACTION CODE: {{ $transaction_code }}">
         <div>
           <div class="">
@@ -123,7 +121,7 @@
         </div>
         <div class="mt-5  border-t-2">
           @php
-            $requestTransactions = \App\Models\RequestTransaction::where('request_id', $request_id)->get();
+            $requestTransactions = \App\Models\RequestTransaction::whereIn('request_id', $requests)->get();
           @endphp
 
           @foreach ($requestTransactions as $item)
@@ -134,7 +132,7 @@
                 <p class="text-xs text-gray-500">Last remarks: {{ $item->asset->remarks }}</p>
               </div>
               <div class="w-72 border-l p-1">
-
+                <x-input label="Damage Remarks" wire:model="damage_remarks.{{ $item->asset->id }}" />
                 <x-native-select label="Select New remarks" wire:model="new_remarks.{{ $item->asset->id }}">
                   <option selected hidden value="">----------</option>
                   <option value="1">Brand New</option>
@@ -144,13 +142,9 @@
                   <option value="5">Damage</option>
                   <option value="6">Lost</option>
                 </x-native-select>
-                @isset($new_remarks[$item->asset_id])
-                  @if ($new_remarks[$item->asset_id] == 5 ||
-                      $new_remarks[$item->asset_id] == 6 ||
-                      $new_remarks[$item->asset_id] == 4)
-                    <x-input label="Remarks" wire:model="remarks.{{ $item->asset->id }}" />
-                  @endif
-                @endisset
+              
+
+                @dump($damage_remarks)
               </div>
             </div>
           @endforeach
@@ -163,7 +157,94 @@
           </div>
         </x-slot>
       </x-card>
-    </x-modal>
-  </div>
+    </x-modal> --}}
 
+    <div x-show="manage" x-cloak class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <!--
+                                                      Background backdrop, show/hide based on modal state.
+                                                  
+                                                      Entering: "ease-out duration-300"
+                                                        From: "opacity-0"
+                                                        To: "opacity-100"
+                                                      Leaving: "ease-in duration-200"
+                                                        From: "opacity-100"
+                                                        To: "opacity-0"
+                                                    -->
+      <div x-show="manage" x-clock x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <!--
+                                                          Modal panel, show/hide based on modal state.
+                                                  
+                                                          Entering: "ease-out duration-300"
+                                                            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                                            To: "opacity-100 translate-y-0 sm:scale-100"
+                                                          Leaving: "ease-in duration-200"
+                                                            From: "opacity-100 translate-y-0 sm:scale-100"
+                                                            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                                        -->
+          <div x-show="manage" x-cloak x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6">
+            <div>
+              <div class="">
+                <h3 class="text-xs text-gray-500">Borrowed Date:</h3>
+                <p class=" font-semibold text-green-600">{{ \Carbon\Carbon::parse($borrowed)->format('F d, Y') }}</p>
+              </div>
+              <div class="mt-2">
+                <h3 class="text-xs text-gray-500">Returned Date:</h3>
+                <p class=" font-semibold text-red-600">{{ \Carbon\Carbon::parse($return)->format('F d, Y') }}</p>
+              </div>
+              <div class="mt-2">
+                <h3 class="text-xs text-gray-500">Purpose of borrowing:</h3>
+                <p class=" font-semibold text-gray-600">{{ $purpose }}</p>
+              </div>
+            </div>
+            <div class="mt-5  border-t-2">
+              @php
+                $requestTransactions = \App\Models\RequestTransaction::where('request_id', $requests)->get();
+              @endphp
+
+              @foreach ($requestTransactions as $key => $item)
+                <div wire:key="{{ $key }}" class="flex mt-2 border-b justify-between">
+                  <div>
+                    <h1 class="font-bold text-gray-700">{{ $item->asset->name }}</h1>
+                    <p class="text-xs text-gray-500">Serial Number: {{ $item->asset->serial_number }}</p>
+                    <p class="text-xs text-gray-500">Last remarks: {{ $item->asset->remarks }}</p>
+                  </div>
+                  <div class="w-72 border-l p-1">
+                    <x-input label="Damage Remarks" wire:model="damage_remarks.{{ $item->asset->id }}" />
+                    <x-native-select label="Select New remarks" wire:model="new_remarks.{{ $item->asset->id }}">
+                      <option selected hidden value="">----------</option>
+                      <option value="1">Brand New</option>
+                      <option value="2">Functional</option>
+                      <option value="3">Unfunctional</option>
+                      <option value="4">Slightly Damage</option>
+                      <option value="5">Damage</option>
+                      <option value="6">Lost</option>
+                    </x-native-select>
+
+                  </div>
+                </div>
+              @endforeach
+            </div>
+            <input type="hidden" wire:model="damage_remarks">
+            <input type="text
+            
+            " wire:model="new_remarks">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
   </div>

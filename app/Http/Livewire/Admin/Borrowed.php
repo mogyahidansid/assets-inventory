@@ -8,27 +8,29 @@ use App\Models\Asset;
 use App\Models\RequestTransaction;
 use WireUi\Traits\Actions;
 use App\Models\returnAsset;
+use Livewire\WithPagination;
 
 class Borrowed extends Component
 {
     use Actions;
+    use WithPagination;
     public $search;
     public $manage_borrow = false;
     public $transaction_code, $return, $borrowed, $purpose;
     public $borrower_id;
     public $new_remarks = [];
-    public $damage_remarks;
+    public $damage_remarks = [];
     public $transaction_id;
+    public $request_id;
 
     public $requests = [];
     public function render()
     {
         return view('livewire.admin.borrowed', [
             'transactions' => Transaction::whereIn('status', [2, 4])
-                ->when($this->search, function ($query) {
-                    $query->where('transaction_code', $this->search);
-                })
-                ->get(),
+                ->where('transaction_code', 'like', '%' . $this->search . '%')
+                ->orderBy('status', 'asc')
+                ->paginate(7),
         ]);
     }
 
@@ -44,6 +46,7 @@ class Borrowed extends Component
                 'icon' => 'info',
             ]);
         } else {
+            $this->request_id = $request->requests->first()->id;
             $this->manage_borrow = true;
             $this->transaction_id = $transaction_id;
             $this->borrower_id = $request->user_id;
@@ -53,25 +56,39 @@ class Borrowed extends Component
             $this->borrowed = $request->borrowed_date;
 
             $this->requests = $request->requests->pluck('id');
+
+            // dd($request->requests);
         }
     }
 
     public function returnAsset()
     {
-        $requestTransactions = RequestTransaction::whereIn(
+        $requestTransactions = RequestTransaction::where(
             'asset_id',
-            $this->requests
+            $this->request_id
         )->get();
 
         $assets = Asset::whereIn(
             'id',
             $requestTransactions->pluck('asset_id')
         )->get();
+        // galoop ka sa assets diri, pero di man abi tanan nga assets ara didto sa array
+        // dd($this->new_remarks, $assets);
         foreach ($assets as $asset) {
-            $asset->update([
-                'remarks' => $this->new_remarks[$asset->id],
-                'reason' => $this->damage_remarks[$asset->id],
-            ]);
+            if (
+                $this->new_remarks[$asset->id] == 4 ||
+                $this->new_remarks[$asset->id] == 5 ||
+                $this->new_remarks[$asset->id] == 6
+            ) {
+                $asset->update([
+                    'remarks' => $this->new_remarks[$asset->id],
+                    'reason' => $this->damage_remarks[$asset->id],
+                ]);
+            } else {
+                $asset->update([
+                    'remarks' => $this->new_remarks[$asset->id],
+                ]);
+            }
 
             returnAsset::create([
                 'asset_id' => $asset->id,
@@ -79,6 +96,13 @@ class Borrowed extends Component
                 'user_id' => $this->borrower_id,
             ]);
         }
+
+        foreach ($assets as $asset) {
+            $asset->update([
+                'status' => 1,
+            ]);
+        }
+
         Transaction::where('id', $this->transaction_id)
             ->first()
             ->update([

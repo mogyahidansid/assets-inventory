@@ -32,16 +32,23 @@
                     </div>
                   </div>
                   <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5 flex space-x-10 items-center">
-                    <div class="flex flex-col">
-                      <h1 class="text-xs text-gray-500 "> Remarks:</h1>
-                      <p class="leading-3 font-semibold text-red-600"> {{ $transaction->remarks }}
-                      </p>
-                    </div>
+                    @if ($transaction->status != 4)
+                      <div class="flex flex-col">
+                        <h1 class="text-xs text-gray-500 "> Remarks:</h1>
+                        <p class="leading-3 font-semibold text-red-600"> {{ $transaction->remarks }}
+                        </p>
+                      </div>
+                    @endif
                     <div>
                       @switch($transaction->status)
                         @case(4)
                           <span
-                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Returned</span>
+                            class="inline-flex items-center rounded-full bg-red-500 px-2.5 py-0.5 text-xs font-medium text-white">Returned</span>
+                        @break
+
+                        @case(3)
+                          <span
+                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Declined</span>
                         @break
 
                         @default

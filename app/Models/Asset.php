@@ -29,4 +29,14 @@ class Asset extends Model
     {
         return $this->hasMany(ReturnAsset::class);
     }
+
+    public function borrowedAssets()
+    {
+        return $this->hasMany(BorrowedAsset::class);
+    }
+
+    public function unreturnedAssets()
+    {
+        return $this->hasMany(UnreturnedAsset::class);
+    }
 }

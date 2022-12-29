@@ -11,7 +11,7 @@ class History extends Component
     {
         return view('livewire.employee.history', [
             'transactions' => Transaction::where('user_id', auth()->user()->id)
-                ->where('status', 4)
+                ->whereIn('status', [3, 4])
                 ->orderBy('created_at', 'desc')
                 ->get(),
         ]);

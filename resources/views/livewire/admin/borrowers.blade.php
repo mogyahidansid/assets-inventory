@@ -52,8 +52,8 @@
                           @switch($employee->status)
                             @case(1)
                               <span
-                                class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs ml-2 font-medium text-green-800">Fast
-                                Returner</span>
+                                class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs ml-2 font-medium text-green-800">
+                                Unblacklisted</span>
                             @break
 
                             @case(2)
@@ -84,7 +84,7 @@
         <p class="text-gray-600">
           <x-native-select label="Select Status" wire:model="status">
             <option selected hidden>Status</option>
-            <option value="1">Fast Returner</option>
+            <option value="1">Unblacklisted</option>
             <option value="2">BlackListed</option>
           </x-native-select>
         </p>

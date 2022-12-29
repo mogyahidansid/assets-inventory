@@ -18,13 +18,20 @@ class Home extends Component
     public $category_get = [];
     public $request_form = false;
     public $return_date;
-
+    public $transaction_count;
     public $purpose;
 
     public $reqQty;
 
     public function render()
     {
+        $this->transaction_count = Transaction::where(
+            'user_id',
+            auth()->user()->id
+        )
+            ->where('status', 2)
+            ->where('updated_at', '<=', now())
+            ->count();
         return view('livewire.employee.home', [
             'categories' => Category::all(),
         ]);
@@ -32,24 +39,32 @@ class Home extends Component
 
     public function selectCategory($category_id)
     {
-        $query = Category::where('id', $category_id)->first();
-        if (count($query->assets) == 0) {
+        if ($this->transaction_count >= 3) {
             $this->dialog()->error(
                 $title = 'Sorry',
-                $description = 'This Item has no available assets'
+                $description =
+                    'You have reached the maximum number of requests and your account is now blacklisted. Please contact the administrator to unblock your account.'
             );
         } else {
-            foreach ($this->category_get as $key => $item) {
-                if ($item['id'] == $query->id) {
-                    $this->category_get[$key]['qty'] += 1;
-                    return;
+            $query = Category::where('id', $category_id)->first();
+            if (count($query->assets) == 0) {
+                $this->dialog()->error(
+                    $title = 'Sorry',
+                    $description = 'This Item has no available assets'
+                );
+            } else {
+                foreach ($this->category_get as $key => $item) {
+                    if ($item['id'] == $query->id) {
+                        $this->category_get[$key]['qty'] += 1;
+                        return;
+                    }
                 }
+                $this->category_get[] = [
+                    'id' => $category_id,
+                    'name' => $query->name,
+                    'qty' => 1,
+                ];
             }
-            $this->category_get[] = [
-                'id' => $category_id,
-                'name' => $query->name,
-                'qty' => 1,
-            ];
         }
     }
 

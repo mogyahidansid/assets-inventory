@@ -45,14 +45,15 @@
                   <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5 flex space-x-10 items-center">
                     <div class="flex flex-col">
                       <h1 class="text-xs text-gray-500 "> Requested Item:</h1>
-                      <h1 class="leading-3 font-semibold text-green-600"> {{ count($transaction->requests) }} Assets
+                      <h1 class="leading-3 font-semibold text-green-600"> {{ count($transaction->requests) }}
+                        @choice('Asset|Assets', count($transaction->requests))
                       </h1>
                     </div>
                     <div>
                       @switch($transaction->status)
                         @case(1)
                           <span
-                            class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Pending</span>
+                            class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Pending</span>
                         @break
 
                         @case(2)

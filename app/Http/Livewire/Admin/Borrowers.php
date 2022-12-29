@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\EmployeeInformation;
+use Livewire\WithPagination;
+use App\Models\BlackListed;
 
 class Borrowers extends Component
 {
+    use WithPagination;
     public $search;
     public $manage_modal = false;
     public $employee_id;
@@ -24,7 +27,7 @@ class Borrowers extends Component
                             '%' . $this->search . '%'
                         );
                 })
-                ->get(),
+                ->paginate(10),
         ]);
     }
 
@@ -42,9 +45,21 @@ class Borrowers extends Component
             'id',
             $this->employee_id
         )->first();
-        $employee->update([
-            'status' => $this->status,
-        ]);
+
+        if ($this->status == 2) {
+            $employee->update([
+                'status' => $this->status,
+            ]);
+
+            BlackListed::create([
+                'user_id' => $employee->user_id,
+            ]);
+        } else {
+            $employee->update([
+                'status' => $this->status,
+            ]);
+        }
+
         $this->manage_modal = false;
     }
 }
