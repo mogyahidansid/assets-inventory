@@ -283,14 +283,14 @@
           <tbody class="">
             @foreach ($borrowed as $item)
               <tr>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->serial_number }}</td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->name }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->serial_number }}</td>
+                <td class="border text-gray-600  px-3 py-1">{{ $item->name }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1">{{ $item->asset->description }}
+                <td class="border text-gray-600  px-3 py-1">{{ $item->description }}
                 </td>
-                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->asset->price, 2) }}
+                <td class="border text-gray-600  px-3 py-1"> &#8369;{{ number_format($item->price, 2) }}
                 </td>
-                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->asset->category->name }}
+                <td class="border text-gray-600 uppercase  px-3 py-1">{{ $item->category->name }}
                 </td>
               </tr>
             @endforeach

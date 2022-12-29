@@ -148,7 +148,7 @@
                   @if ($new_remarks[$item->asset_id] == 5 ||
                       $new_remarks[$item->asset_id] == 6 ||
                       $new_remarks[$item->asset_id] == 4)
-                    <x-input label="Remarks" wire:model="remarks.{{ $item->asset->id }}" />
+                    <x-input label="Remarks" wire:model="damage_remarks.{{ $item->asset->id }}" />
                   @endif
                 @endisset
               </div>

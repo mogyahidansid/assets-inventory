@@ -11,8 +11,11 @@ use App\Models\ReturnAsset;
 use App\Models\Transaction;
 use App\Models\UnreturnedAsset;
 use App\Models\BlackListed;
+
+use WireUi\Traits\Actions;
 class Report extends Component
 {
+    use Actions;
     public $report1_modal = false;
     public $report2_modal = false;
     public $report3_modal = false;
@@ -40,7 +43,7 @@ class Report extends Component
                 Carbon::now()->subDays(5)
             )->get(),
             'borrowed' => Asset::withCount('borrowedAssets')
-                ->having('borrowed_assets_count', 5)
+                ->having('borrowed_assets_count', '>', 0)
                 ->get(),
             'leasts' => Asset::withCount('requestTransactions')
                 ->having('request_transactions_count', '<', 3)
@@ -94,7 +97,13 @@ class Report extends Component
                     ->where('returned_date', '<=', now())
                     ->get();
 
-                if ($transaction) {
+                if ($transaction->count() == 0) {
+                    // $this->dialog()->error(
+                    //     $title = 'Report',
+                    //     $description = 'No unreturned assets available'
+                    // );
+                } else {
+                    // dd('meron');
                     if (
                         UnreturnedAsset::where(
                             'user_id',

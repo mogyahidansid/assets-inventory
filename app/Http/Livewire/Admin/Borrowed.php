@@ -83,24 +83,23 @@ class Borrowed extends Component
                 $asset->update([
                     'remarks' => $this->new_remarks[$asset->id],
                     'reason' => $this->damage_remarks[$asset->id],
+                    'status' => 1,
+                ]);
+                returnAsset::create([
+                    'asset_id' => $asset->id,
+                    'status' => $this->new_remarks[$asset->id],
+                    'user_id' => $this->borrower_id,
                 ]);
             } else {
                 $asset->update([
                     'remarks' => $this->new_remarks[$asset->id],
                 ]);
+                returnAsset::create([
+                    'asset_id' => $asset->id,
+                    'status' => $this->new_remarks[$asset->id],
+                    'user_id' => $this->borrower_id,
+                ]);
             }
-
-            returnAsset::create([
-                'asset_id' => $asset->id,
-                'status' => $this->new_remarks[$asset->id],
-                'user_id' => $this->borrower_id,
-            ]);
-        }
-
-        foreach ($assets as $asset) {
-            $asset->update([
-                'status' => 1,
-            ]);
         }
 
         Transaction::where('id', $this->transaction_id)
