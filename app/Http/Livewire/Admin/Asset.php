@@ -7,10 +7,13 @@ use App\Models\Category;
 use WireUi\Traits\Actions;
 use App\Models\Asset as AssetModel;
 use App\Models\Inventory;
+use Livewire\WithPagination;
 
 class Asset extends Component
 {
     use Actions;
+    use WithPagination;
+
     public $filter_id;
     public $manage_category = false;
     public $category_name;
@@ -44,7 +47,7 @@ class Asset extends Component
                 });
             })
                 ->with('assets.category')
-                ->get(),
+                ->paginate(10),
         ]);
     }
 

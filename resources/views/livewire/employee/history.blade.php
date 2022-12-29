@@ -41,7 +41,7 @@
                       @switch($transaction->status)
                         @case(4)
                           <span
-                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Returned</span>
+                            class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Declined</span>
                         @break
 
                         @default
