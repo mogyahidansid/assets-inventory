@@ -27,13 +27,6 @@ class Notification extends Component
         return redirect()->route('employee.request');
     }
 
-    // public function getListeners()
-    // {
-    //     return [
-    //         "echo-private:notification.{$this->userId},RequestNotificationEvent" => '$refresh',
-    //     ];
-    // }
-
     public function render()
     {
         return view('livewire.notification');
