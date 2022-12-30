@@ -91,7 +91,7 @@ class Home extends Component
             'message' => auth()->user()->name . ' is requesting ',
         ];
 
-        event(new \App\Events\RequestNotificationEvent($adminId->id));
+        // event(new \App\Events\RequestNotificationEvent($adminId->id));
         $adminId->notify(new RequestNotification($notifToEmployee));
 
         $this->request_form = false;

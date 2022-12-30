@@ -7,6 +7,7 @@ use Livewire\Component;
 class Notification extends Component
 {
     public $userId;
+    public $notifModal = false;
 
     public function mount()
     {
@@ -19,16 +20,19 @@ class Notification extends Component
         $notification->markAsRead();
 
         if (auth()->user()->role == 1) {
+            $this->notifModal = false;
             return redirect()->route('admin.manage-request', ['id' => $notifId]);
         }
+
+        return redirect()->route('employee.request');
     }
 
-    public function getListeners()
-    {
-        return [
-            "echo-private:notification.{$this->userId},RequestNotificationEvent" => '$refresh',
-        ];
-    }
+    // public function getListeners()
+    // {
+    //     return [
+    //         "echo-private:notification.{$this->userId},RequestNotificationEvent" => '$refresh',
+    //     ];
+    // }
 
     public function render()
     {

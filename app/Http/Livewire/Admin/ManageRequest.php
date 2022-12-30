@@ -174,7 +174,7 @@ class ManageRequest extends Component
                 'message' => 'The admin approved your request',
             ];
 
-            event(new \App\Events\RequestNotificationEvent($employeeId->user_id));
+            // event(new \App\Events\RequestNotificationEvent($employeeId->user_id));
             $userEmployee->notify(new RequestNotification($notifToEmployee));
         }
 
@@ -224,7 +224,7 @@ class ManageRequest extends Component
                     'message' => 'The admin declined your request',
                 ];
 
-                event(new \App\Events\RequestNotificationEvent($transaction->user_id));
+                // event(new \App\Events\RequestNotificationEvent($transaction->user_id));
                 $userEmployee->notify(new RequestNotification($notifToEmployee));
             }
 
